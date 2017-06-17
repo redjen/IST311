@@ -4,10 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author redjen
- */
 public class EmployeeTest extends PersonTestBase<Employee> {
 
    private final static long TEST_EMPLOYEE_1_ID = 1001;
