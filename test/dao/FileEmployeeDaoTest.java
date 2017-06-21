@@ -1,9 +1,5 @@
 package dao;
 
-import dao.EmployeeDao;
-import dao.EmployeeDaoException;
-import dao.EmployeeDaoFactory;
-import dao.FileEmployeeDaoImpl;
 import hospital.Employee;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -18,20 +14,20 @@ import org.junit.Test;
  */
 public class FileEmployeeDaoTest {
 
-   private EmployeeDao dao;
+   private AccountDao dao;
 
    public FileEmployeeDaoTest() {
    }
 
    @Before
-   public void setUp() throws EmployeeDaoException {
-      dao = EmployeeDaoFactory.getEmployeeDao();
+   public void setUp() throws AccountDaoException {
+      dao = AccountDaoFactory.getDao();
    }
 
    @Test
    public void testGetData() {
 
-      ArrayList<Employee> employees = dao.getEmployees();
+      ArrayList<Employee> employees = dao.getAccounts();
 
       testGetDataHelper(employees.get(0), "test1", 100, "Mairead Âviâja", "Kravitz");
       testGetDataHelper(employees.get(1), "test2", 101, "Cathryn", "Struna");
@@ -41,33 +37,33 @@ public class FileEmployeeDaoTest {
 
    @Test
    public void getEmployeeDao() {
-      assertEquals(FileEmployeeDaoImpl.class, dao.getClass());
+      assertEquals(FileAccountDaoImpl.class, dao.getClass());
    }
 
    @Test
    public void getEmployeeByLoginName() {
-      assertEquals("Kravitz", dao.getEmployeeByLoginName("test1").getLastName());
-      assertNull(dao.getEmployeeByLoginName("nope"));
+      assertEquals("Kravitz", dao.getAccountByLoginName("test1").getLastName());
+      assertNull(dao.getAccountByLoginName("nope"));
    }
 
    @Test
    public void getEmployeeByLoginNameNull() {
-      assertNull(dao.getEmployeeByLoginName("nope"));
+      assertNull(dao.getAccountByLoginName("nope"));
    }
 
    @Test
    public void getEmployeeById() {
-      assertEquals(100, dao.getEmployeeById(100).getId());
+      assertEquals(100, dao.getAccountById(100).getId());
    }
 
    @Test
    public void getEmployeeByIdNull() {
-      assertNull(dao.getEmployeeById(3032));
+      assertNull(dao.getAccountById(3032));
    }
 
    @Test
    public void testValidatePassword() {
-      ArrayList<Employee> employees = dao.getEmployees();
+      ArrayList<Employee> employees = dao.getAccounts();
 
       assertTrue(employees.get(0).validatePassword("testpass1"));
       assertFalse(employees.get(0).validatePassword("incorrect"));

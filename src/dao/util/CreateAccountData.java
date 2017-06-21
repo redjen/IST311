@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * Creates the test employee data file
  *
  */
-public class CreateEmployeeData {
+public class CreateAccountData {
 
    public static void main(String[] args) {
       File file = new File("resources/employees.dat");
@@ -46,11 +46,11 @@ public class CreateEmployeeData {
          dos.write(hashPassword("testpass3"));
 
       } catch (FileNotFoundException ex) {
-         Logger.getLogger(CreateEmployeeData.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(CreateAccountData.class.getName()).log(Level.SEVERE, null, ex);
       } catch (IOException ex) {
-         Logger.getLogger(CreateEmployeeData.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(CreateAccountData.class.getName()).log(Level.SEVERE, null, ex);
       } catch (NoSuchAlgorithmException ex) {
-         Logger.getLogger(CreateEmployeeData.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(CreateAccountData.class.getName()).log(Level.SEVERE, null, ex);
       } 
    }
 
