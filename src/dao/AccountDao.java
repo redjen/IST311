@@ -44,7 +44,6 @@ public interface AccountDao {
    /**
     * Updates accounts in storage
     *
-    * @param accounts the accounts to save
     */
    public void saveAccounts();
    
