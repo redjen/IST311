@@ -1,6 +1,6 @@
 package dao;
 
-import hospital.Employee;
+import hospital.Account;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -10,13 +10,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The FileAccountDaoImpl class is a simple implementation of an employee
+ * The FileAccountDaoImpl class is a simple implementation of an account
  * database using a pregenerated data file. It provides methods for loading,
  * searching, and updating the database.
  *
@@ -28,33 +27,31 @@ import java.util.logging.Logger;
  */
 public class FileAccountDaoImpl implements AccountDao {
 
-   private final static String ACCOUNT_DATA = "build/employees.dat";
+   private final static String ACCOUNT_DATA = "build/accounts.dat";
    private final static String TEST_DATA = "resources/accounts.txt";
 
-   /* A collection that emulates an employee table indexed by login name */
-   private final HashMap<String, Employee> employeesByLoginName;
+   /* A collection that emulates an account table indexed by login name */
+   private final HashMap<String, Account> accountsByLoginName;
 
-   /* A collection that emulates and employee table indexed by ID */
-   private final HashMap<Long, Employee> employeesById;
+   /* A collection that emulates and account table indexed by ID */
+   private final HashMap<Long, Account> accountsById;
 
-   /* A collection that emulates an employee table */
-   private final ArrayList<Employee> employees;
-//
-//   private DataInputStream dis;
-//   private DataOutputStream dos;
+   /* A collection that emulates an account table */
+   private final ArrayList<Account> accounts;
+
 
    /**
     * Constructs a new Dao and loads the accounts
     *
-    * @throws dao.AccountDaoException if the employee data file is missing,
+    * @throws dao.AccountDaoException if the account data file is missing,
     * empty, or cannot be parsed
     */
    public FileAccountDaoImpl() throws AccountDaoException {
       // TODO implement custom exceptions in the next version
 
-      this.employees = new ArrayList<>();
-      this.employeesByLoginName = new HashMap<>();
-      this.employeesById = new HashMap<>();
+      this.accounts = new ArrayList<>();
+      this.accountsByLoginName = new HashMap<>();
+      this.accountsById = new HashMap<>();
 
       loadRepository();
    }
@@ -63,38 +60,38 @@ public class FileAccountDaoImpl implements AccountDao {
     * {@inheritDoc }
     */
    @Override
-   public Employee getAccountByLoginName(String loginName) {
-      return employeesByLoginName.get(loginName);
+   public Account getAccountByLoginName(String loginName) {
+      return accountsByLoginName.get(loginName);
    }
 
    /**
     * {@inheritDoc }
     */
    @Override
-   public Employee getAccountById(long id) {
-      return employeesById.get(id);
+   public Account getAccountById(long id) {
+      return accountsById.get(id);
    }
 
    /**
     * {@inheritDoc }
     */
    @Override
-   public ArrayList<Employee> getAccounts() {
-      ArrayList<Employee> employeeList = new ArrayList<>(employees);
-      return employeeList;
+   public ArrayList<Account> getAccounts() {
+      ArrayList<Account> accountList = new ArrayList<>(accounts);
+      return accountList;
    }
 
    /**
     * {@inheritDoc }
     */
    @Override
-   public void saveAccount(Employee account) {
-      if (employeesById.containsKey(account.getId())) {
-         employeesById.put(account.getId(), account);
+   public void saveAccount(Account account) {
+      if (accountsById.containsKey(account.getId())) {
+         accountsById.put(account.getId(), account);
       } else {
-         employees.add(account);
-         employeesById.put(account.getId(), account);
-         employeesByLoginName.put(account.getLoginName(), account);
+         accounts.add(account);
+         accountsById.put(account.getId(), account);
+         accountsByLoginName.put(account.getLoginName(), account);
       }
       saveAccounts();
    }
@@ -104,11 +101,11 @@ public class FileAccountDaoImpl implements AccountDao {
     */
    @Override
    public void saveAccounts() {
-      int numRecords = employees.size();
+      int numRecords = accounts.size();
 
       try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File(ACCOUNT_DATA)))) {
          dos.writeInt(numRecords);
-         for (Employee account : employees) {
+         for (Account account : accounts) {
             writeAccount(account, dos);
          }
          dos.flush();
@@ -122,16 +119,16 @@ public class FileAccountDaoImpl implements AccountDao {
     */
    @Override
    public void reset() {
-      employees.clear();
-      employeesById.clear();
-      employeesByLoginName.clear();
+      accounts.clear();
+      accountsById.clear();
+      accountsByLoginName.clear();
 
       File file = new File(ACCOUNT_DATA);
       file.delete();
    }
 
    /**
-    * Loads the employee repository from the data file
+    * Loads the account repository from the data file
     *
     * @throws AccountDaoException
     */
@@ -148,15 +145,15 @@ public class FileAccountDaoImpl implements AccountDao {
          int numRecords = dis.readInt();
 
          for (int i = 0; i < numRecords; i++) {
-            Employee employee = readAccount(dis);
-            employees.add(employee);
+            Account account = readAccount(dis);
+            accounts.add(account);
          }
 
       } catch (FileNotFoundException ex) {
          throw new AccountDaoException(String.format("Employee data %s missing.",
                  ACCOUNT_DATA));
       } catch (IOException ex) {
-         throw new AccountDaoException(String.format("Error reading employee data %s.",
+         throw new AccountDaoException(String.format("Error reading account data %s.",
                  ACCOUNT_DATA), ex);
       }
 
@@ -170,7 +167,7 @@ public class FileAccountDaoImpl implements AccountDao {
     * @return
     * @throws IOException
     */
-   private Employee readAccount(DataInputStream dis) throws IOException {
+   private Account readAccount(DataInputStream dis) throws IOException {
 
       long id = dis.readLong();
       String loginId = dis.readUTF();
@@ -178,24 +175,26 @@ public class FileAccountDaoImpl implements AccountDao {
       String lastName = dis.readUTF();
       byte[] passwordHash = new byte[16];
       dis.read(passwordHash);
+      boolean isEmployee = dis.readBoolean();
 
-      return new Employee(id, firstName, lastName, loginId, passwordHash);
+      return new Account(id, firstName, lastName, loginId, passwordHash, isEmployee);
    }
 
    /**
     * Helper method to write a single account's data to file
     *
-    * @param employee
+    * @param account
     * @param dos
     * @throws IOException
     */
-   private void writeAccount(Employee employee, DataOutputStream dos) throws IOException {
+   private void writeAccount(Account account, DataOutputStream dos) throws IOException {
 
-      dos.writeLong(employee.getId());
-      dos.writeUTF(employee.getLoginName());
-      dos.writeUTF(employee.getFirstName());
-      dos.writeUTF(employee.getLastName());
-      dos.write(employee.getPasswordHash());
+      dos.writeLong(account.getId());
+      dos.writeUTF(account.getLoginName());
+      dos.writeUTF(account.getFirstName());
+      dos.writeUTF(account.getLastName());
+      dos.write(account.getPasswordHash());
+      dos.writeBoolean(account.isEmployee());
    }
 
    /**
@@ -204,15 +203,16 @@ public class FileAccountDaoImpl implements AccountDao {
     */
    private void loadTestData() {
       System.out.println("Writing test data");
-      employees.clear();
+      accounts.clear();
 
       try (Scanner in = new Scanner(new File(TEST_DATA))) {
          while (in.hasNextLine()) {
             String line = in.nextLine();
             if (line.charAt(0) != '#') {
                String[] tokens = line.split(",");
-               Employee employee = new Employee(Long.parseLong(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4]);
-               employees.add(employee);
+               boolean isEmployee = (Integer.parseInt(tokens[5]) == 1);
+               Account account = new Account(Long.parseLong(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4], isEmployee);
+               accounts.add(account);
             }
          }
          saveAccounts();
@@ -225,11 +225,11 @@ public class FileAccountDaoImpl implements AccountDao {
     * Creates the hashmap indexes of accounts by ID and login name
     */
    private void indexAccounts() {
-      employeesById.clear();
-      employeesByLoginName.clear();
-      for (Employee employee : employees) {
-         employeesById.put(employee.getId(), employee);
-         employeesByLoginName.put(employee.getLoginName(), employee);
+      accountsById.clear();
+      accountsByLoginName.clear();
+      for (Account account : accounts) {
+         accountsById.put(account.getId(), account);
+         accountsByLoginName.put(account.getLoginName(), account);
       }
    }
 

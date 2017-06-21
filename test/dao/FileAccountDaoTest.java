@@ -1,6 +1,6 @@
 package dao;
 
-import hospital.Employee;
+import hospital.Account;
 import java.util.ArrayList;
 import org.junit.After;
 import static org.junit.Assert.*;
@@ -36,11 +36,11 @@ public class FileAccountDaoTest {
    @Test
    public void testGetData() {
 
-      ArrayList<Employee> employees = dao.getAccounts();
+      ArrayList<Account> accounts = dao.getAccounts();
 
-      testGetDataHelper(employees.get(0), "test1", 100, "First1", "Last1");
-      testGetDataHelper(employees.get(1), "test2", 101, "First2", "Last2");
-      testGetDataHelper(employees.get(2), "test3", 102, "First3", "Last3");
+      testGetDataHelper(accounts.get(0), "test1", 100, "First1", "Last1");
+      testGetDataHelper(accounts.get(1), "test2", 101, "First2", "Last2");
+      testGetDataHelper(accounts.get(2), "test3", 102, "First3", "Last3");
 
    }
 
@@ -72,27 +72,27 @@ public class FileAccountDaoTest {
 
    @Test
    public void testValidatePassword() {
-      ArrayList<Employee> employees = dao.getAccounts();
+      ArrayList<Account> accounts = dao.getAccounts();
 
-      assertTrue(employees.get(0).validatePassword("testpass1"));
-      assertFalse(employees.get(0).validatePassword("incorrect"));
-      assertTrue(employees.get(1).validatePassword("testpass2"));
-      assertTrue(employees.get(2).validatePassword("testpass3"));
+      assertTrue(accounts.get(0).validatePassword("testpass1"));
+      assertFalse(accounts.get(0).validatePassword("incorrect"));
+      assertTrue(accounts.get(1).validatePassword("testpass2"));
+      assertTrue(accounts.get(2).validatePassword("testpass3"));
    }
    
    @Test
    public void testSaveAccount() {
-      Employee employee = new Employee(5000, "first5000", "last5000", "test5000", "pass5000");
-      dao.saveAccount(employee);
-      testGetDataHelper(employee, "test5000", 5000, "first5000", "last5000");
+      Account account = new Account(5000, "first5000", "last5000", "test5000", "pass5000", true);
+      dao.saveAccount(account);
+      testGetDataHelper(account, "test5000", 5000, "first5000", "last5000");
    }
 
-   private void testGetDataHelper(Employee employee, String loginName, long id,
+   private void testGetDataHelper(Account account, String loginName, long id,
            String firstName, String lastName) {
 
-      assertEquals(loginName, employee.getLoginName());
-      assertEquals(id, employee.getId());
-      assertEquals(firstName, employee.getFirstName());
-      assertEquals(lastName, employee.getLastName());
+      assertEquals(loginName, account.getLoginName());
+      assertEquals(id, account.getId());
+      assertEquals(firstName, account.getFirstName());
+      assertEquals(lastName, account.getLastName());
    }
 }

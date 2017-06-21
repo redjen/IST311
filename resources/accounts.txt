@@ -2,6 +2,6 @@
 # It should be loaded on application start and before any tests
 # involving accounts are run
 # ID, login name, first name, last name, password, isEmployee
-100,First1,Last1,test1,testpass1
-101,First2,Last2,test2,testpass2
-102,First3,Last3,test3,testpass3
+100,First1,Last1,test1,testpass1,1
+101,First2,Last2,test2,testpass2,1
+102,First3,Last3,test3,testpass3,0

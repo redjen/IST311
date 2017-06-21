@@ -1,6 +1,6 @@
 package dao;
 
-import hospital.Employee;
+import hospital.Account;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,30 +16,30 @@ public interface AccountDao {
     *
     * @return list of accounts
     */
-   public ArrayList<Employee> getAccounts();
+   public ArrayList<Account> getAccounts();
 
    /**
     * Searches for an account with the given login name and returns it
     *
-    * @param employeeId the employee's login name
+    * @param accountId the account's login name
     * @return the account or null if no match was found
     */
-   public Employee getAccountByLoginName(String employeeId);
+   public Account getAccountByLoginName(String accountId);
 
    /**
     * Searches for an account with the given id and returns it
     *
-    * @param id the employee's login name
+    * @param id the account's login name
     * @return the account or null if no match was found
     */
-   public Employee getAccountById(long id);
+   public Account getAccountById(long id);
 
    /**
     * Creates or updates the specified account in storage
     *
     * @param account the account to save
     */
-   public void saveAccount(Employee account);
+   public void saveAccount(Account account);
 
    /**
     * Updates accounts in storage
