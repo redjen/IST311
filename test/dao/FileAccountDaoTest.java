@@ -45,7 +45,7 @@ public class FileAccountDaoTest {
 
    @Test
    public void getAccountByLoginName() {
-      assertEquals("Kravitz", dao.getAccountByLoginName("test1").getLastName());
+      assertEquals("Last1", dao.getAccountByLoginName("test1").getLastName());
       assertNull(dao.getAccountByLoginName("nope"));
    }
 
