@@ -15,7 +15,8 @@ public class Employee extends Person implements Authenticatable {
    private final byte[] passwordHash;
 
    private final static String PASSWORD_ALGORITHM = "MD5";
-   
+   private boolean employee = true;
+
    private final static Logger logger = Logger.getLogger("Employee");
 
    /**
@@ -88,14 +89,21 @@ public class Employee extends Person implements Authenticatable {
       return false;
    }
 
-   /**
-    * Returns the login name used for authentication
-    *
-    * @return the login name
-    */
    @Override
    public String getLoginName() {
       return loginName;
+   }
+
+   public boolean isEmployee() {
+      return employee;
+   }
+
+   public void setEmployee(boolean employee) {
+      this.employee = employee;
+   }
+
+   public byte[] getPasswordHash() {
+      return passwordHash;
    }
 
    /**

@@ -1,6 +1,5 @@
 package dao;
 
-import dao.util.CreateAccountData;
 import hospital.Employee;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -21,6 +20,7 @@ public class FileAccountDaoTest {
 
    public FileAccountDaoTest() {
    }
+  
 
    @Before
    public void setUp() throws AccountDaoException {
@@ -32,9 +32,9 @@ public class FileAccountDaoTest {
 
       ArrayList<Employee> employees = dao.getAccounts();
 
-      testGetDataHelper(employees.get(0), "test1", 100, "Mairead Âviâja", "Kravitz");
-      testGetDataHelper(employees.get(1), "test2", 101, "Cathryn", "Struna");
-      testGetDataHelper(employees.get(2), "test3", 102, "Tina", "Wallace");
+      testGetDataHelper(employees.get(0), "test1", 100, "First1", "Last1");
+      testGetDataHelper(employees.get(1), "test2", 101, "First2", "Last2");
+      testGetDataHelper(employees.get(2), "test3", 102, "First3", "Last3");
 
    }
 
