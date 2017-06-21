@@ -1,6 +1,9 @@
 package dao;
 
 
+/**
+ * A custom exception for use when working with the DAO classes
+ */
 public class AccountDaoException extends Exception {
 
    public AccountDaoException() {

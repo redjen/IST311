@@ -34,10 +34,24 @@ public class AccountDaoFactory {
    public AccountDaoFactory() {
    }
 
+   /**
+    * Gets a new AccountDao of the default type
+    * @return new AccountDao
+    * @throws AccountDaoException 
+    */
    public static AccountDao getDao() throws AccountDaoException {
       return getDao(DEFAULT_DAO);
    }
 
+      /**
+    * Gets a new AccountDao of the specified type
+    * 
+    * The available types are public static fields of this class: DATABASE_DAO and FILE_DAO
+    * 
+    * @param daoType the DaoType 
+    * @return new AccountDao
+    * @throws AccountDaoException 
+    */
    public static AccountDao getDao(int daoType) throws AccountDaoException {
       AccountDao dao = null;
 

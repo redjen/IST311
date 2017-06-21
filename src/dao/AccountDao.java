@@ -2,7 +2,6 @@ package dao;
 
 import hospital.Account;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Defines methods for reading and writing account data.

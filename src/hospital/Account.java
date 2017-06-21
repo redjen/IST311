@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 /**
  * The Account class represents a hospital account that can log in and access
  * patient data.
+ * 
+ * This class can be extended to more types in the future, such as patients
+ * that can log in.
  */
 public class Account extends Person implements Authenticatable {
 
@@ -62,6 +65,9 @@ public class Account extends Person implements Authenticatable {
 
    }
 
+   /**
+    * {@inheritDoc }
+    */
    @Override
    public String getPublicDisplayName() {
       return loginName;
@@ -101,8 +107,8 @@ public class Account extends Person implements Authenticatable {
       return employee;
    }
 
-   public void setEmployee(boolean account) {
-      this.employee = account;
+   public void setEmployee(boolean employee) {
+      this.employee = employee;
    }
 
    public byte[] getPasswordHash() {

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  * The FileAccountDaoImpl class is a simple implementation of an account
- * database using a pregenerated data file. It provides methods for loading,
+ * database using a pre-generated data file. It provides methods for loading,
  * searching, and updating the database.
  *
  * This class should not be instantiated directly, but instead by using the
@@ -33,12 +33,11 @@ public class FileAccountDaoImpl implements AccountDao {
    /* A collection that emulates an account table indexed by login name */
    private final HashMap<String, Account> accountsByLoginName;
 
-   /* A collection that emulates and account table indexed by ID */
+   /* A collection that emulates an account table indexed by ID */
    private final HashMap<Long, Account> accountsById;
 
    /* A collection that emulates an account table */
    private final ArrayList<Account> accounts;
-
 
    /**
     * Constructs a new Dao and loads the accounts
@@ -47,12 +46,13 @@ public class FileAccountDaoImpl implements AccountDao {
     * empty, or cannot be parsed
     */
    public FileAccountDaoImpl() throws AccountDaoException {
-      // TODO implement custom exceptions in the next version
 
       this.accounts = new ArrayList<>();
       this.accountsByLoginName = new HashMap<>();
       this.accountsById = new HashMap<>();
 
+      // Read all accounts from data file. If the data file is missing a new
+      // one will be created using test data from resources/accounts.txt
       loadRepository();
    }
 
@@ -128,39 +128,6 @@ public class FileAccountDaoImpl implements AccountDao {
    }
 
    /**
-    * Loads the account repository from the data file
-    *
-    * @throws AccountDaoException
-    */
-   private void loadRepository() throws AccountDaoException {
-
-      File data = new File(ACCOUNT_DATA);
-
-      if (!data.exists()) {
-         loadTestData();
-      }
-
-      try (DataInputStream dis = new DataInputStream(new FileInputStream(data))) {
-
-         int numRecords = dis.readInt();
-
-         for (int i = 0; i < numRecords; i++) {
-            Account account = readAccount(dis);
-            accounts.add(account);
-         }
-
-      } catch (FileNotFoundException ex) {
-         throw new AccountDaoException(String.format("Employee data %s missing.",
-                 ACCOUNT_DATA));
-      } catch (IOException ex) {
-         throw new AccountDaoException(String.format("Error reading account data %s.",
-                 ACCOUNT_DATA), ex);
-      }
-
-      indexAccounts();
-   }
-
-   /**
     * Helper method to read a single account's data from file
     *
     * @param dis
@@ -198,6 +165,51 @@ public class FileAccountDaoImpl implements AccountDao {
    }
 
    /**
+    * Creates the hashmap indexes of accounts by ID and login name
+    */
+   private void indexAccounts() {
+      accountsById.clear();
+      accountsByLoginName.clear();
+      for (Account account : accounts) {
+         accountsById.put(account.getId(), account);
+         accountsByLoginName.put(account.getLoginName(), account);
+      }
+   }
+
+   /**
+    * Loads the account repository from the data file
+    *
+    * @throws AccountDaoException
+    */
+   private void loadRepository() throws AccountDaoException {
+
+      File data = new File(ACCOUNT_DATA);
+
+      if (!data.exists()) {
+         loadTestData();
+      }
+
+      try (DataInputStream dis = new DataInputStream(new FileInputStream(data))) {
+
+         int numRecords = dis.readInt();
+
+         for (int i = 0; i < numRecords; i++) {
+            Account account = readAccount(dis);
+            accounts.add(account);
+         }
+
+      } catch (FileNotFoundException ex) {
+         throw new AccountDaoException(String.format("Employee data %s missing.",
+                 ACCOUNT_DATA));
+      } catch (IOException ex) {
+         throw new AccountDaoException(String.format("Error reading account data %s.",
+                 ACCOUNT_DATA), ex);
+      }
+
+      indexAccounts();
+   }
+
+   /**
     * Helper method to create the account database from a test file if it's
     * missing
     */
@@ -218,18 +230,6 @@ public class FileAccountDaoImpl implements AccountDao {
          saveAccounts();
       } catch (FileNotFoundException ex) {
          Logger.getLogger(FileAccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      }
-   }
-
-   /**
-    * Creates the hashmap indexes of accounts by ID and login name
-    */
-   private void indexAccounts() {
-      accountsById.clear();
-      accountsByLoginName.clear();
-      for (Account account : accounts) {
-         accountsById.put(account.getId(), account);
-         accountsByLoginName.put(account.getLoginName(), account);
       }
    }
 
