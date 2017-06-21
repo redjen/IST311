@@ -2,6 +2,7 @@ package dao;
 
 import hospital.Employee;
 import java.util.ArrayList;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,11 @@ public class FileAccountDaoTest {
    @Before
    public void setUp() throws AccountDaoException {
       dao = AccountDaoFactory.getDao();
+   }
+   
+   @After
+   public void tearDown() {
+      dao.reset();
    }
 
    @Test
@@ -72,6 +78,13 @@ public class FileAccountDaoTest {
       assertFalse(employees.get(0).validatePassword("incorrect"));
       assertTrue(employees.get(1).validatePassword("testpass2"));
       assertTrue(employees.get(2).validatePassword("testpass3"));
+   }
+   
+   @Test
+   public void testSaveAccount() {
+      Employee employee = new Employee(5000, "first5000", "last5000", "test5000", "pass5000");
+      dao.saveAccount(employee);
+      testGetDataHelper(employee, "test5000", 5000, "first5000", "last5000");
    }
 
    private void testGetDataHelper(Employee employee, String loginName, long id,

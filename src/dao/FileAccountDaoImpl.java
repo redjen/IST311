@@ -89,25 +89,45 @@ public class FileAccountDaoImpl implements AccountDao {
     */
    @Override
    public void saveAccount(Employee account) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      if (employeesById.containsKey(account.getId())) {
+         employeesById.put(account.getId(), account);
+      } else {
+         employees.add(account);
+         employeesById.put(account.getId(), account);
+         employeesByLoginName.put(account.getLoginName(), account);
+      }
+      saveAccounts();
    }
 
    /**
     * {@inheritDoc }
     */
    @Override
-   public void saveAccounts(List<Employee> accounts) {
-      int numRecords = accounts.size();
+   public void saveAccounts() {
+      int numRecords = employees.size();
 
       try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(new File(ACCOUNT_DATA)))) {
          dos.writeInt(numRecords);
-         for (Employee account : accounts) {
+         for (Employee account : employees) {
             writeAccount(account, dos);
          }
          dos.flush();
       } catch (IOException ex) {
          Logger.getLogger(FileAccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
       }
+   }
+
+   /**
+    * {@inheritDoc }
+    */
+   @Override
+   public void reset() {
+      employees.clear();
+      employeesById.clear();
+      employeesByLoginName.clear();
+
+      File file = new File(ACCOUNT_DATA);
+      file.delete();
    }
 
    /**
@@ -130,8 +150,6 @@ public class FileAccountDaoImpl implements AccountDao {
          for (int i = 0; i < numRecords; i++) {
             Employee employee = readAccount(dis);
             employees.add(employee);
-            employeesById.put(employee.getId(), employee);
-            employeesByLoginName.put(employee.getLoginName(), employee);
          }
 
       } catch (FileNotFoundException ex) {
@@ -141,8 +159,17 @@ public class FileAccountDaoImpl implements AccountDao {
          throw new AccountDaoException(String.format("Error reading employee data %s.",
                  ACCOUNT_DATA), ex);
       }
+
+      indexAccounts();
    }
 
+   /**
+    * Helper method to read a single account's data from file
+    *
+    * @param dis
+    * @return
+    * @throws IOException
+    */
    private Employee readAccount(DataInputStream dis) throws IOException {
 
       long id = dis.readLong();
@@ -155,6 +182,13 @@ public class FileAccountDaoImpl implements AccountDao {
       return new Employee(id, firstName, lastName, loginId, passwordHash);
    }
 
+   /**
+    * Helper method to write a single account's data to file
+    *
+    * @param employee
+    * @param dos
+    * @throws IOException
+    */
    private void writeAccount(Employee employee, DataOutputStream dos) throws IOException {
 
       dos.writeLong(employee.getId());
@@ -164,21 +198,39 @@ public class FileAccountDaoImpl implements AccountDao {
       dos.write(employee.getPasswordHash());
    }
 
+   /**
+    * Helper method to create the account database from a test file if it's
+    * missing
+    */
    private void loadTestData() {
       System.out.println("Writing test data");
-      ArrayList<Employee> list = new ArrayList<>();
+      employees.clear();
+
       try (Scanner in = new Scanner(new File(TEST_DATA))) {
          while (in.hasNextLine()) {
             String line = in.nextLine();
             if (line.charAt(0) != '#') {
                String[] tokens = line.split(",");
                Employee employee = new Employee(Long.parseLong(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4]);
-               list.add(employee);
+               employees.add(employee);
             }
          }
-         saveAccounts(list);
+         saveAccounts();
       } catch (FileNotFoundException ex) {
          Logger.getLogger(FileAccountDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
+
+   /**
+    * Creates the hashmap indexes of accounts by ID and login name
+    */
+   private void indexAccounts() {
+      employeesById.clear();
+      employeesByLoginName.clear();
+      for (Employee employee : employees) {
+         employeesById.put(employee.getId(), employee);
+         employeesByLoginName.put(employee.getLoginName(), employee);
+      }
+   }
+
 }

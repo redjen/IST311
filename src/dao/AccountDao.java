@@ -42,9 +42,14 @@ public interface AccountDao {
    public void saveAccount(Employee account);
 
    /**
-    * Creates or updates the specified accounts in storage
+    * Updates accounts in storage
     *
     * @param accounts the accounts to save
     */
-   public void saveAccounts(List<Employee> accounts);
+   public void saveAccounts();
+   
+   /**
+    * Removes all accounts
+    */
+   public void reset();
 }
