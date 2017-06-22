@@ -6,20 +6,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The Employee class represents a hospital employee that can log in and access
+ * The Account class represents a hospital account that can log in and access
  * patient data.
+ * 
+ * This class can be extended to more types in the future, such as patients
+ * that can log in.
  */
-public class Employee extends Person implements Authenticatable {
+public class Account extends Person implements Authenticatable {
 
    private final String loginName;
    private final byte[] passwordHash;
 
    private final static String PASSWORD_ALGORITHM = "MD5";
-   
-   private final static Logger logger = Logger.getLogger("Employee");
+   private boolean employee = true;
+
+   private final static Logger logger = Logger.getLogger("Account");
 
    /**
-    * Constructs a new Employee using a plain-text password
+    * Constructs a new Account using a plain-text password
     *
     * The password is hashed on object creation and persisted.
     *
@@ -28,27 +32,30 @@ public class Employee extends Person implements Authenticatable {
     * @param firstName
     * @param lastName
     * @param password
+    * @param isEmployee
     */
-   public Employee(long id, String firstName, String lastName, String loginName,
-           String password) {
+   public Account(long id, String firstName, String lastName, String loginName,
+           String password, boolean isEmployee) {
 
-      this(id, firstName, lastName, loginName, hashPassword(password));
+      this(id, firstName, lastName, loginName, hashPassword(password), isEmployee);
 
    }
 
    /**
-    * Constructs a new Employee with an already-calculated password hash
+    * Constructs a new Account with an already-calculated password hash
     *
     * @param id
     * @param firstName
     * @param lastName
     * @param loginName
     * @param passwordHash
+    * @param isEmployee
     */
-   public Employee(long id, String firstName, String lastName, String loginName,
-           byte[] passwordHash) {
+   public Account(long id, String firstName, String lastName, String loginName,
+           byte[] passwordHash, boolean isEmployee) {
       super(id, firstName, lastName);
       this.loginName = loginName;
+      this.employee = isEmployee;
 
       if (passwordHash.length > 0) {
          this.passwordHash = passwordHash;
@@ -58,16 +65,16 @@ public class Employee extends Person implements Authenticatable {
 
    }
 
+   /**
+    * {@inheritDoc }
+    */
    @Override
    public String getPublicDisplayName() {
       return loginName;
    }
 
    /**
-    * Compares the provided password string against the saved password
-    *
-    * @param password string to test
-    * @return true if the password matches, otherwise false
+    * {@inheritDoc }
     */
    @Override
    public boolean validatePassword(String password) {
@@ -89,13 +96,23 @@ public class Employee extends Person implements Authenticatable {
    }
 
    /**
-    * Returns the login name used for authentication
-    *
-    * @return the login name
+    * {@inheritDoc }
     */
    @Override
    public String getLoginName() {
       return loginName;
+   }
+
+   public boolean isEmployee() {
+      return employee;
+   }
+
+   public void setEmployee(boolean employee) {
+      this.employee = employee;
+   }
+
+   public byte[] getPasswordHash() {
+      return passwordHash;
    }
 
    /**
