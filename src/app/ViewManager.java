@@ -1,9 +1,13 @@
 package app;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 /**
@@ -11,6 +15,7 @@ import javafx.stage.Stage;
  * @author maximdumont
  */
 public class ViewManager {
+    private ScrollPane injectorControl;
     private static ViewManager instance;
     private Stage stage;
     private int x,y;
@@ -39,11 +44,16 @@ public class ViewManager {
         return this.y;
     }
     
-    public void navigate(String uri) throws IOException{
-        if(!uri.endsWith(".fxml")){
+    private String internalValidate(String uri)
+    {
+          if(!uri.endsWith(".fxml")){
             uri+=".fxml";
         }
-        
+        return uri;
+    }
+    
+    public void navigate(String uri) throws IOException{
+        uri = internalValidate(uri);
         Parent root = FXMLLoader.load(getClass().getResource(uri));
         Scene scene = new Scene(root);
         
@@ -54,4 +64,5 @@ public class ViewManager {
     public static ViewManager getManager(){
         return instance;
     }
+    
 }
