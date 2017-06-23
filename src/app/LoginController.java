@@ -29,7 +29,7 @@ public class LoginController implements Initializable {
     }    
     
     public void login(ActionEvent event) throws IOException{
-        boolean isLoggedIn = false;
+        boolean isLoggedIn = true;
         
         if(isLoggedIn){
             ViewManager.getManager().navigate("TabView");
