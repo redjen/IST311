@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="app.PatientStatusViewController">
+  <children>
+    <HBox id="HBox" alignment="CENTER" layoutX="300.0" layoutY="27.0" spacing="5.0">
+      <children>
+        <TextField fx:id="searchField" prefWidth="200.0" promptText="Search ..." />
+        <Button mnemonicParsing="false" onAction="#OnGoClicked" text="Go!" />
+      </children>
+    </HBox>
+    <AnchorPane id="AnchorPane" layoutX="129.0" layoutY="84.0" prefHeight="174.0">
+      <children>
+        <HBox id="HBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" spacing="5.0">
+          <children>
+            <Label text="Patient Number" />
+            <TextField id="patientNumberLabel" fx:id="patientNumberTextField" alignment="CENTER_RIGHT" prefWidth="200.0" />
+          </children>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER" layoutX="19.0" layoutY="29.0" spacing="5.0">
+          <children>
+            <Label text="Admitted On" />
+            <TextField id="admittedDateLabel" fx:id="admittedDateTextField" alignment="CENTER_RIGHT" prefWidth="200.0" />
+          </children>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER" layoutX="31.0" layoutY="58.0" spacing="5.0">
+          <children>
+            <Label text="First Name" />
+            <TextField id="firstNameLabel" fx:id="firstNameTextField" alignment="CENTER_RIGHT" prefWidth="200.0" />
+          </children>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER" layoutX="31.0" layoutY="87.0" spacing="5.0">
+          <children>
+            <Label text="Last Name" />
+            <TextField id="lastNameLabel" fx:id="lastNameTextField" alignment="CENTER_RIGHT" prefWidth="200.0" />
+          </children>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER" layoutX="53.0" layoutY="116.0" spacing="5.0">
+          <children>
+            <Label prefWidth="50.0" text="Status" />
+            <ComboBox fx:id="statusOptionsLabel" prefWidth="199.99990000000253" promptText="">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+          </children>
+        </HBox>
+        <Button layoutX="0.0" layoutY="152.0" mnemonicParsing="false" onAction="#onUpdateClicked" prefWidth="308.0" text="Update Patient" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>
