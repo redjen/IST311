@@ -23,12 +23,19 @@ import javafx.scene.paint.Color;
  */
 public class LoginController implements Initializable {
 
+    // username textfield for username 
     @FXML
     private TextField username;
+
+    // password box for user password
     @FXML
     private PasswordField password;
+
+    // validator when isLoggedIn flags as false
     @FXML
     private Label errorLabel;
+
+    // used for clock on top right
     @FXML
     private Label clockLabel;
 
@@ -55,13 +62,13 @@ public class LoginController implements Initializable {
                     }
                 });
             }
-        }, 0, 60*1000);
+        }, 0, 60 * 1000);
     }
 
     /*
         Login event when login button is clicked. 
         @param ActionEvent when button clicked
-    */
+     */
     public void login(ActionEvent event) throws IOException {
         boolean isLoggedIn = true;
 

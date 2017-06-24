@@ -16,16 +16,27 @@ import javafx.scene.control.TextField;
  */
 public class PatientStatusViewController implements Initializable {
 
+    // search field for searching patients
     @FXML
     private TextField searchField;
+
+    // patient number text field
     @FXML
     private TextField patientNumberTextField;
+
+    // admitted date text field
     @FXML
     private TextField admittedDateTextField;
+
+    // first name text field
     @FXML
     private TextField firstNameTextField;
+
+    // last name text field
     @FXML
     private TextField lastNameTextField;
+
+    // status options combo box
     @FXML
     private ComboBox statusOptionsLabel;
 

@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
  */
 public class PatientListViewController implements Initializable {
 
+    // table view used to populate patient data
     @FXML
     private TableView patientListTableView;
 
@@ -30,7 +31,7 @@ public class PatientListViewController implements Initializable {
 
     /* 
         Populate the table view with patient data
-    */
+     */
     private void populateView() {
         // TODO :Populate view
     }

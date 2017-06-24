@@ -37,6 +37,7 @@ public class TabViewController implements Initializable {
     public TabViewController() {
     }
 
+    // used to start the view clock
     private void startClock() {
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
         clockLabel.setText(timeStamp);
@@ -51,7 +52,7 @@ public class TabViewController implements Initializable {
                     }
                 });
             }
-        }, 0, 60*1000);
+        }, 0, 60 * 1000);
     }
 
     @Override

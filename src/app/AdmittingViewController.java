@@ -21,12 +21,19 @@ import java.util.TimerTask;
  */
 public class AdmittingViewController implements Initializable {
 
+    // First Name TextField used by FXML
     @FXML
     private TextField firstName;
+
+    // Last Name TextField used by FXML
     @FXML
     private TextField lastName;
+
+    // SendUpdates checkbox used by FXML
     @FXML
     private CheckBox sendUpdates;
+
+    // Clock Label used by FXML
     @FXML
     private Label clockLabel;
 
@@ -41,7 +48,7 @@ public class AdmittingViewController implements Initializable {
     /*
         Method is called when the patient add button is clicked
         @param ActionEvent event being sent from fxml click event
-    */
+     */
     public void onPatientAdded(ActionEvent event) {
         String firstNameText = firstName.getText();
         String lastNameText = lastName.getText();
