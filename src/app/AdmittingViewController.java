@@ -20,26 +20,32 @@ import java.util.TimerTask;
  * @author maximdumont
  */
 public class AdmittingViewController implements Initializable {
-    @FXML private TextField firstName;
-    @FXML private TextField lastName;
-    @FXML private CheckBox sendUpdates;
-    @FXML private Label clockLabel;
+
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
+    @FXML
+    private CheckBox sendUpdates;
+    @FXML
+    private Label clockLabel;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    public AdmittingViewController(){
-        
     }
-    
-    public void onPatientAdded(ActionEvent event){
+
+    /*
+        Method is called when the patient add button is clicked
+        @param ActionEvent event being sent from fxml click event
+    */
+    public void onPatientAdded(ActionEvent event) {
         String firstNameText = firstName.getText();
         String lastNameText = lastName.getText();
         boolean sendUpdates = this.sendUpdates.isPressed();
     }
-    
+
 }

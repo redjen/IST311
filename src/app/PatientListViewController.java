@@ -13,20 +13,25 @@ import javafx.scene.control.TableView;
  */
 public class PatientListViewController implements Initializable {
 
-    @FXML private TableView patientListTableView;
+    @FXML
+    private TableView patientListTableView;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    public PatientListViewController(){
+    }
+
+    public PatientListViewController() {
         populateView();
     }
-    
-    private void populateView(){
+
+    /* 
+        Populate the table view with patient data
+    */
+    private void populateView() {
         // TODO :Populate view
     }
 }

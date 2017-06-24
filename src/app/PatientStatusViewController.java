@@ -16,25 +16,33 @@ import javafx.scene.control.TextField;
  */
 public class PatientStatusViewController implements Initializable {
 
-    @FXML private TextField searchField;
-    @FXML private TextField patientNumberTextField;
-    @FXML private TextField admittedDateTextField;
-    @FXML private TextField firstNameTextField;
-    @FXML private TextField lastNameTextField;
-    @FXML private ComboBox statusOptionsLabel;
-                    
+    @FXML
+    private TextField searchField;
+    @FXML
+    private TextField patientNumberTextField;
+    @FXML
+    private TextField admittedDateTextField;
+    @FXML
+    private TextField firstNameTextField;
+    @FXML
+    private TextField lastNameTextField;
+    @FXML
+    private ComboBox statusOptionsLabel;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    public void OnGoClicked(ActionEvent event){
+    }
+
+    /* Search for patient data when go button clicked*/
+    public void OnGoClicked(ActionEvent event) {
         String searchString = searchField.getText();
     }
-    
-    public void onUpdateClicked(ActionEvent event){
-    } 
+
+    /* Update patient data when update button clicked*/
+    public void onUpdateClicked(ActionEvent event) {
+    }
 }

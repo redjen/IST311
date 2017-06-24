@@ -22,19 +22,26 @@ import javafx.scene.paint.Color;
  * @author maximdumont
  */
 public class LoginController implements Initializable {
-    @FXML private TextField username;
-    @FXML private PasswordField password;
-    @FXML private Label errorLabel;
-    @FXML private Label clockLabel;
+
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label clockLabel;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         startClock();
-    }    
-    
-        private void startClock(){
+    }
+
+    /* Starts the view clock */
+    private void startClock() {
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
         clockLabel.setText(timeStamp);
         Timer timer = new java.util.Timer();
@@ -42,23 +49,27 @@ public class LoginController implements Initializable {
         timer.schedule(new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
-                public void run() {
-                    String timeStamp = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-                    clockLabel.setText(timeStamp);
-                }
-            });
+                    public void run() {
+                        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                        clockLabel.setText(timeStamp);
+                    }
+                });
+            }
+        }, 0, 60*1000);
     }
-},0,1000);
-    }
-        
-    public void login(ActionEvent event) throws IOException{
+
+    /*
+        Login event when login button is clicked. 
+        @param ActionEvent when button clicked
+    */
+    public void login(ActionEvent event) throws IOException {
         boolean isLoggedIn = true;
-        
-        if(isLoggedIn){
+
+        if (isLoggedIn) {
             ViewManager.getManager().navigate("TabView");
-        }else{
+        } else {
             errorLabel.setVisible(true);
         }
     }
-    
+
 }
