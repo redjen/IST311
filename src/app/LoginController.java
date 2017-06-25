@@ -23,60 +23,66 @@ import javafx.scene.paint.Color;
  */
 public class LoginController implements Initializable {
 
-    // username textfield for username 
-    @FXML
-    private TextField username;
+   // username textfield for username 
+   @FXML
+   private TextField username;
 
-    // password box for user password
-    @FXML
-    private PasswordField password;
+   // password box for user password
+   @FXML
+   private PasswordField password;
 
-    // validator when isLoggedIn flags as false
-    @FXML
-    private Label errorLabel;
+   // validator when isLoggedIn flags as false
+   @FXML
+   private Label errorLabel;
 
-    // used for clock on top right
-    @FXML
-    private Label clockLabel;
+   // used for clock on top right
+   @FXML
+   private Label clockLabel;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        startClock();
-    }
+   private Timer timer;
 
-    /* Starts the view clock */
-    private void startClock() {
-        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-        clockLabel.setText(timeStamp);
-        Timer timer = new java.util.Timer();
+   /**
+    * Initializes the controller class.
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+      startClock();
+   }
 
-        timer.schedule(new TimerTask() {
-            public void run() {
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-                        clockLabel.setText(timeStamp);
-                    }
-                });
-            }
-        }, 0, 60 * 1000);
-    }
+   /**
+    * Starts the view's clock
+    */
+   private void startClock() {
+      String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+      clockLabel.setText(timeStamp);
+      timer = new java.util.Timer(true);
 
-    /*
-        Login event when login button is clicked. 
-        @param ActionEvent when button clicked
-     */
-    public void login(ActionEvent event) throws IOException {
-        boolean isLoggedIn = true;
+      timer.schedule(new TimerTask() {
+         public void run() {
+            Platform.runLater(new Runnable() {
+               public void run() {
+                  String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                  clockLabel.setText(timeStamp);
+               }
+            });
+         }
+      }, 0, 60 * 1000);
+   }
 
-        if (isLoggedIn) {
-            ViewManager.getManager().navigate("TabView");
-        } else {
-            errorLabel.setVisible(true);
-        }
-    }
+   /**
+    * Login event when login button is clicked.
+    *
+    * @param ActionEvent when button clicked
+    */
+   public void login(ActionEvent event) throws IOException {
+      boolean isLoggedIn = true;
+
+      if (isLoggedIn) {
+         timer.cancel();
+         ViewManager.getManager().navigate("TabView");
+      } else {
+         errorLabel.setVisible(true);
+      }
+   }
 
 }
