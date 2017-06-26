@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,8 +48,7 @@ public class LoginController implements Initializable {
 
    private Timer timer;
 
-    public LoginController() throws AccountDaoException {
-        this.loginDao = AccountDaoFactory.getDao();
+    public LoginController()  {
     }
 
    /**
@@ -84,11 +85,16 @@ public class LoginController implements Initializable {
     * @param ActionEvent when button clicked
     */
    public void login(ActionEvent event) throws IOException {
+       try {
+            this.loginDao = AccountDaoFactory.getDao();
+        } catch (AccountDaoException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
       Account account = loginDao.getAccountByLoginName(username.getText());
       boolean isLoggedIn = account!=null && account.validatePassword(password.getText());
       if (isLoggedIn) {
          timer.cancel();
-         
          ViewManager.getManager().navigate("TabView");
       } else {
          errorLabel.setVisible(true);
