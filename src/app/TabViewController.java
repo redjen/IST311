@@ -2,10 +2,8 @@ package app;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,13 +14,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
- *
- * @author maximdumont
+ * TabViewController is the controller for the TabView, the view top-level
+ * view for the application that contains the objects that users need to
+ * navigate the application.
  */
 public class TabViewController implements Initializable {
 

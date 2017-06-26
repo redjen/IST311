@@ -12,6 +12,9 @@ package dao;
  * This pattern will simplify development going forward as we will only need
  * to change this class if we switch to another storage method instead of 
  * having to change multiple classes.
+ * 
+ * @see AccountDao
+ * @see AccountDaoException
  *
  */
 public class AccountDaoFactory {

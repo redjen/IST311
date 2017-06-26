@@ -8,9 +8,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the post-admitted patient view.
  *
- * @author maximdumont
  */
 public class AdmittingPatientAddedViewController implements Initializable {
 
