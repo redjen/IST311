@@ -29,76 +29,74 @@ import javafx.scene.paint.Color;
  */
 public class LoginController implements Initializable {
 
-    private AccountDao loginDao;
-   // username textfield for username 
-   @FXML
-   private TextField username;
+    // username textfield for username 
+    @FXML
+    private TextField username;
 
-   // password box for user password
-   @FXML
-   private PasswordField password;
+    // password box for user password
+    @FXML
+    private PasswordField password;
 
-   // validator when isLoggedIn flags as false
-   @FXML
-   private Label errorLabel;
+    // validator when isLoggedIn flags as false
+    @FXML
+    private Label errorLabel;
 
-   // used for clock on top right
-   @FXML
-   private Label clockLabel;
+    // used for clock on top right
+    @FXML
+    private Label clockLabel;
 
-   private Timer timer;
+    private Timer timer;
 
-    public LoginController()  {
+    public LoginController() {
     }
 
-   /**
-    * Initializes the controller class.
-    */
-   @Override
-   public void initialize(URL url, ResourceBundle rb) {
-      startClock();
-   }
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        startClock();
+    }
 
-   /**
-    * Starts the view's clock
-    */
-   private void startClock() {
-      String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-      clockLabel.setText(timeStamp);
-      timer = new java.util.Timer(true);
+    /**
+     * Starts the view's clock
+     */
+    private void startClock() {
+        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        clockLabel.setText(timeStamp);
+        timer = new java.util.Timer(true);
 
-      timer.schedule(new TimerTask() {
-         public void run() {
-            Platform.runLater(new Runnable() {
-               public void run() {
-                  String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-                  clockLabel.setText(timeStamp);
-               }
-            });
-         }
-      }, 0, 60 * 1000);
-   }
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                        clockLabel.setText(timeStamp);
+                    }
+                });
+            }
+        }, 0, 60 * 1000);
+    }
 
-   /**
-    * Login event when login button is clicked.
-    *
-    * @param ActionEvent when button clicked
-    */
-   public void login(ActionEvent event) throws IOException {
-       try {
-            this.loginDao = AccountDaoFactory.getDao();
+    /**
+     * Login event when login button is clicked.
+     *
+     * @param ActionEvent when button clicked
+     */
+    public void login(ActionEvent event) throws IOException {
+        try {
+            AccountDao loginDao = AccountDaoFactory.getDao();
+            Account account = loginDao.getAccountByLoginName(username.getText());
+            boolean isLoggedIn = account != null && account.validatePassword(password.getText());
+            if (isLoggedIn) {
+                timer.cancel();
+                ViewManager.getManager().navigate("TabView");
+            } else {
+                errorLabel.setVisible(true);
+            }
         } catch (AccountDaoException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            return;
         }
-      Account account = loginDao.getAccountByLoginName(username.getText());
-      boolean isLoggedIn = account!=null && account.validatePassword(password.getText());
-      if (isLoggedIn) {
-         timer.cancel();
-         ViewManager.getManager().navigate("TabView");
-      } else {
-         errorLabel.setVisible(true);
-      }
-   }
+    }
 
 }
