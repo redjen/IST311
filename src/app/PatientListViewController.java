@@ -7,32 +7,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the patient list view
  *
- * @author maximdumont
  */
 public class PatientListViewController implements Initializable {
 
-    // table view used to populate patient data
-    @FXML
-    private TableView patientListTableView;
+   // table view used to populate patient data
+   @FXML
+   private TableView patientListTableView;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+   /**
+    * Initializes the controller class.
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+      // TODO
+   }
 
-    public PatientListViewController() {
-        populateView();
-    }
+   public PatientListViewController() {
+      populateView();
+   }
 
-    /* 
+   /* 
         Populate the table view with patient data
-     */
-    private void populateView() {
-        // TODO :Populate view
-    }
+    */
+   private void populateView() {
+      // TODO :Populate view
+   }
 }

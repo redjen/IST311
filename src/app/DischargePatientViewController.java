@@ -9,9 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 /**
- * FXML Controller class
+ * FXML Controller class for the view shown when discharging a patient
  *
- * @author maximdumont
  */
 public class DischargePatientViewController implements Initializable {
 

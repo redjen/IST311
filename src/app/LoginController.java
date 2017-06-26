@@ -20,83 +20,85 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 
 /**
- * FXML Controller class
+ * LoginController is the FXML controller for LoginView. It handles showing the
+ * login view and authenticating users.
  *
- * @author maximdumont
  */
 public class LoginController implements Initializable {
 
-    // username textfield for username 
-    @FXML
-    private TextField username;
+   // username textfield for username 
+   @FXML
+   private TextField username;
 
-    // password box for user password
-    @FXML
-    private PasswordField password;
+   // password box for user password
+   @FXML
+   private PasswordField password;
 
-    // validator when isLoggedIn flags as false
-    @FXML
-    private Label errorLabel;
+   // validator when isLoggedIn flags as false
+   @FXML
+   private Label errorLabel;
 
-    // used for clock on top right
-    @FXML
-    private Label clockLabel;
+   // used for clock on top right
+   @FXML
+   private Label clockLabel;
 
-    private Timer timer;
+   private Timer timer;
 
-    public LoginController() {
-    }
+   public LoginController() {
+   }
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        startClock();
-    }
+   /**
+    * Initializes the controller class.
+    *
+    * @param url
+    * @param rb
+    */
+   @Override
+   public void initialize(URL url, ResourceBundle rb) {
+      startClock();
+   }
 
-    /**
-     * Starts the view's clock
-     */
-    private void startClock() {
-        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-        clockLabel.setText(timeStamp);
-        timer = new java.util.Timer(true);
+   /**
+    * Starts the view's clock
+    */
+   private void startClock() {
+      String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+      clockLabel.setText(timeStamp);
+      timer = new java.util.Timer(true);
 
-        timer.schedule(new TimerTask() {
-            public void run() {
-                Platform.runLater(new Runnable() {
-                    public void run() {
-                        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-                        clockLabel.setText(timeStamp);
-                    }
-                });
-            }
-        }, 0, 60 * 1000);
-    }
+      timer.schedule(new TimerTask() {
+         public void run() {
+            Platform.runLater(new Runnable() {
+               public void run() {
+                  String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                  clockLabel.setText(timeStamp);
+               }
+            });
+         }
+      }, 0, 60 * 1000);
+   }
 
-    /**
-     * Login event when login button is clicked.
-     *
-     * @param ActionEvent when button clicked
-     */
-    public void login(ActionEvent event) throws IOException {
-        try {
-            AccountDao loginDao = AccountDaoFactory.getDao();
-            Account account = loginDao.getAccountByLoginName(username.getText());
-            boolean isLoggedIn = account != null && account.validatePassword(password.getText());
-            if (isLoggedIn) {
-                timer.cancel();
-                ViewManager.getManager().navigate("TabView");
-            } else {
-                errorLabel.setVisible(true);
-            }
-        } catch (AccountDaoException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   /**
+    * Login event when login button is clicked.
+    *
+    * @param event when button clicked
+    */
+   public void login(ActionEvent event) {
+      try {
+         AccountDao loginDao = AccountDaoFactory.getDao();
+         Account account = loginDao.getAccountByLoginName(username.getText());
+         boolean isLoggedIn = account != null && account.validatePassword(password.getText());
+         if (isLoggedIn) {
+            timer.cancel();
+            ViewManager.getManager().navigate("TabView");
+         } else {
+            errorLabel.setVisible(true);
+         }
+      } catch (AccountDaoException ex) {
+         Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+      }
+   }
 
 }
