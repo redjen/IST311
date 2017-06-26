@@ -1,5 +1,9 @@
 package app;
 
+import dao.AccountDao;
+import dao.AccountDaoException;
+import dao.AccountDaoFactory;
+import hospital.Account;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -7,6 +11,8 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,66 +29,74 @@ import javafx.scene.paint.Color;
  */
 public class LoginController implements Initializable {
 
-   // username textfield for username 
-   @FXML
-   private TextField username;
+    // username textfield for username 
+    @FXML
+    private TextField username;
 
-   // password box for user password
-   @FXML
-   private PasswordField password;
+    // password box for user password
+    @FXML
+    private PasswordField password;
 
-   // validator when isLoggedIn flags as false
-   @FXML
-   private Label errorLabel;
+    // validator when isLoggedIn flags as false
+    @FXML
+    private Label errorLabel;
 
-   // used for clock on top right
-   @FXML
-   private Label clockLabel;
+    // used for clock on top right
+    @FXML
+    private Label clockLabel;
 
-   private Timer timer;
+    private Timer timer;
 
-   /**
-    * Initializes the controller class.
-    */
-   @Override
-   public void initialize(URL url, ResourceBundle rb) {
-      startClock();
-   }
+    public LoginController() {
+    }
 
-   /**
-    * Starts the view's clock
-    */
-   private void startClock() {
-      String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-      clockLabel.setText(timeStamp);
-      timer = new java.util.Timer(true);
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        startClock();
+    }
 
-      timer.schedule(new TimerTask() {
-         public void run() {
-            Platform.runLater(new Runnable() {
-               public void run() {
-                  String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-                  clockLabel.setText(timeStamp);
-               }
-            });
-         }
-      }, 0, 60 * 1000);
-   }
+    /**
+     * Starts the view's clock
+     */
+    private void startClock() {
+        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        clockLabel.setText(timeStamp);
+        timer = new java.util.Timer(true);
 
-   /**
-    * Login event when login button is clicked.
-    *
-    * @param ActionEvent when button clicked
-    */
-   public void login(ActionEvent event) throws IOException {
-      boolean isLoggedIn = true;
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                        clockLabel.setText(timeStamp);
+                    }
+                });
+            }
+        }, 0, 60 * 1000);
+    }
 
-      if (isLoggedIn) {
-         timer.cancel();
-         ViewManager.getManager().navigate("TabView");
-      } else {
-         errorLabel.setVisible(true);
-      }
-   }
+    /**
+     * Login event when login button is clicked.
+     *
+     * @param ActionEvent when button clicked
+     */
+    public void login(ActionEvent event) throws IOException {
+        try {
+            AccountDao loginDao = AccountDaoFactory.getDao();
+            Account account = loginDao.getAccountByLoginName(username.getText());
+            boolean isLoggedIn = account != null && account.validatePassword(password.getText());
+            if (isLoggedIn) {
+                timer.cancel();
+                ViewManager.getManager().navigate("TabView");
+            } else {
+                errorLabel.setVisible(true);
+            }
+        } catch (AccountDaoException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
