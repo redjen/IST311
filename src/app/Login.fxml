@@ -38,8 +38,8 @@
                 </HBox>
               </children>
             </FlowPane>
-            <TextField prefWidth="283.0" promptText="Username" />
-            <PasswordField prefWidth="283.0" promptText="Password" />
+            <TextField prefWidth="283.0" promptText="Username" fx:id="username"/>
+            <PasswordField prefWidth="283.0" promptText="Password" fx:id="password"/>
             <Button mnemonicParsing="false" onAction="#login" prefHeight="32.0" prefWidth="283.0" style="&#10;" text="Login" textFill="#330000">
               <font>
                 <Font size="18.0" />
