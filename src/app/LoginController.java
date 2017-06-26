@@ -1,5 +1,9 @@
 package app;
 
+import dao.AccountDao;
+import dao.AccountDaoException;
+import dao.AccountDaoFactory;
+import hospital.Account;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -23,6 +27,7 @@ import javafx.scene.paint.Color;
  */
 public class LoginController implements Initializable {
 
+    private AccountDao loginDao;
    // username textfield for username 
    @FXML
    private TextField username;
@@ -40,6 +45,10 @@ public class LoginController implements Initializable {
    private Label clockLabel;
 
    private Timer timer;
+
+    public LoginController() throws AccountDaoException {
+        this.loginDao = AccountDaoFactory.getDao();
+    }
 
    /**
     * Initializes the controller class.
@@ -75,10 +84,11 @@ public class LoginController implements Initializable {
     * @param ActionEvent when button clicked
     */
    public void login(ActionEvent event) throws IOException {
-      boolean isLoggedIn = true;
-
+      Account account = loginDao.getAccountByLoginName(username.getText());
+      boolean isLoggedIn = account!=null && account.validatePassword(password.getText());
       if (isLoggedIn) {
          timer.cancel();
+         
          ViewManager.getManager().navigate("TabView");
       } else {
          errorLabel.setVisible(true);
