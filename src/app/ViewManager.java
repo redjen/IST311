@@ -41,7 +41,7 @@ public class ViewManager {
    /**
     * Constructs a new ViewManager using the default width and height
     *
-    * @param stage the root stageF
+    * @param stage the root stage
     *
     */
    public ViewManager(Stage stage) {
