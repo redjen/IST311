@@ -1,6 +1,5 @@
 package app;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,12 +7,10 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 
 /**
  * TabViewController is the controller for the TabView, the view top-level
@@ -22,13 +19,20 @@ import javafx.scene.control.ScrollPane;
  */
 public class TabViewController implements Initializable {
 
-   /**
-    * Initializes the controller class.
-    */
-   @FXML
-   private ScrollPane injectionContainer;
    @FXML
    private Label clockLabel;
+
+   @FXML
+   private Tab homeTab;
+
+   @FXML
+   private Tab patientListTab;
+
+   @FXML
+   private Tab admittingTab;
+
+   @FXML
+   private Tab updateStatusTab;
 
    private Timer timer;
 
@@ -44,8 +48,10 @@ public class TabViewController implements Initializable {
       timer = new java.util.Timer(true);
 
       timer.schedule(new TimerTask() {
+         @Override
          public void run() {
             Platform.runLater(new Runnable() {
+               @Override
                public void run() {
                   String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
                   clockLabel.setText(timeStamp);
@@ -60,37 +66,4 @@ public class TabViewController implements Initializable {
       startClock();
    }
 
-   /**
-    * navigate to patient list when button clicked
-    */
-   public void patientListOnClicked(ActionEvent event) {
-      internalInject("PatientListView.fxml");
-   }
-
-   /**
-    * navigate to admit view when button clicked
-    *
-    * @param event
-    */
-   public void admittingOnClicked(ActionEvent event) {
-      internalInject("AdmittingView.fxml");
-   }
-
-   /**
-    * navigate to patient status view when button clicked
-    */
-   public void patientStatusOnClicked(ActionEvent event) {
-      internalInject("PatientStatusView.fxml");
-   }
-
-   //  DO NOT MODIFY!! Modifications will cause the whole view system to BREAK! Contact @maximdumont for clarification
-   //  Inject specific view by uri name and inject into scroll view
-   private void internalInject(String uri) {
-      try {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource(uri));
-         injectionContainer.setContent(loader.load());
-      } catch (IOException x) {
-         x.printStackTrace();
-      }
-   }
 }
