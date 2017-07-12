@@ -57,6 +57,8 @@ public class ViewManager {
    public void setDimensions(int x, int y) {
       this.x = x;
       this.y = y;
+      stage.setWidth(x);
+      stage.setHeight(y);
    }
 
    public int getX() {
