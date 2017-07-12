@@ -113,9 +113,17 @@ public class ViewManager {
     * Sets the account currently logged in
     * @param currentAccount 
     */
-   public void setCurrentAccount(Account currentAccount) {
+   public void loginAccount(Account currentAccount) {
       ViewManager.currentAccount = currentAccount;
       System.out.printf("Logged in account %s%n", currentAccount.getLoginName());
+   }
+   
+   /**
+    * Logs out the current account, if set
+    */
+   public void logoutAccount() {      
+      System.out.printf("Logged out current account%n", currentAccount.getLoginName());
+      ViewManager.currentAccount = null;
    }
 
    /**
