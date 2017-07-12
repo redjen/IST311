@@ -1,12 +1,12 @@
 package app;
 
+import hospital.Account;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 /**
@@ -15,10 +15,10 @@ import javafx.stage.Stage;
  */
 public class ViewManager {
 
-   private ScrollPane injectorControl;
    private static ViewManager instance;
    private Stage stage;
    private int x, y;
+   private static Account currentAccount = null;
 
    private final static int DEFAULT_WIDTH = 640;
    private final static int DEFAULT_HEIGHT = 500;
@@ -57,6 +57,8 @@ public class ViewManager {
    public void setDimensions(int x, int y) {
       this.x = x;
       this.y = y;
+      stage.setWidth(x);
+      stage.setHeight(y);
    }
 
    public int getX() {
@@ -107,4 +109,33 @@ public class ViewManager {
       return instance;
    }
 
+   /**
+    * Sets the account currently logged in
+    *
+    * @param currentAccount
+    */
+   public void loginAccount(Account currentAccount) {
+      ViewManager.currentAccount = currentAccount;
+      System.out.printf("Logged in account %s%n", currentAccount.getLoginName());
+   }
+
+   /**
+    * Logs out the current account, if set
+    */
+   public void logoutAccount() {
+      if (ViewManager.currentAccount != null) {
+         System.out.printf("Logged out current account%n", currentAccount.getLoginName());
+         ViewManager.currentAccount = null;
+      }
+   }
+
+   /**
+    * Tests the currently logged in account (if any) for employee status
+    *
+    * @return true if the current account is an employee, false otherwise or if
+    * no account is logged in
+    */
+   public boolean isEmployeeAccountLoggedIn() {
+      return (ViewManager.currentAccount != null && ViewManager.currentAccount.isEmployee());
+   }
 }

@@ -128,6 +128,7 @@ public class LoginController implements Initializable {
          boolean isLoggedIn = account != null && account.validatePassword(password.getText());
          if (isLoggedIn) {
             timer.cancel();
+            ViewManager.getManager().loginAccount(account);
             ViewManager.getManager().navigate("TabView");
          } else {
             errorLabel.setVisible(true);
