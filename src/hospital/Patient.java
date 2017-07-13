@@ -7,13 +7,16 @@ import java.util.Date;
  * @author maximdumont
  */
 public class Patient {
-    public Patient(String firstName,String lastName,Date admittanceDate){
+
+    public Patient(String firstName, String lastName, Date admittanceDate,String patientId) {
+        this.admissionDate = admittanceDate;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.admissionDate = admittanceDate;
-    }    
-    
+        this.patientId = patientId;
+    }
+
     private Date admissionDate;
+    private String patientId;
     private String firstName;
     private String lastName;
 
@@ -57,5 +60,19 @@ public class Patient {
      */
     public void setAdmissionDate(Date admissionDate) {
         this.admissionDate = admissionDate;
+    }
+
+    /**
+     * @return the patientId
+     */
+    public String getPatientId() {
+        return patientId;
+    }
+
+    /**
+     * @param patientId the patientId to set
+     */
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 }

@@ -2,6 +2,7 @@ package hospital;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,37 +11,22 @@ import java.util.List;
  * @author maximdumont
  */
 public class PatientCollection{
-    private List<Patient> patients = new ArrayList<>();
-    
-    public PatientCollection(){
-        
-    }
-    
-    public PatientCollection(List<Patient> patients){
-        this.patients = this.patients;
-    }
+    private HashMap<String,Patient> patients = new HashMap<>();
     
     public void add(Patient p){
-        patients.add(p);
+        patients.put(p.getPatientId(), p);
     }
     
-    public void add(Patient[] patients){
-        for(Patient p : patients){
-            this.patients.add(p);
+    public void remove(String patientId){
+        if(patients.containsKey(patientId)){
+            patients.remove(patientId);
         }
     }
     
-    public void remove(Patient p){
-        patients.remove(p);
-    }
-    
-    public void remove(Patient[] p){
-        for(Patient patient:p){
-            patients.remove(p);
+    public Patient find(String patientId){
+        if(patients.containsKey(patientId)){
+            return patients.get(patientId);
         }
-    }
-    
-    public boolean contains(Patient p){
-        return patients.contains(p);
+        return null;
     }
 }
