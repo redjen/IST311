@@ -116,7 +116,7 @@ public class AdmittingViewController implements Initializable {
 
          patientId = patientCollection.add(firstNameText, lastNameText);
 
-         updateViewPatientAdded(patientId);
+         updateViewPatientAdded(patientCollection.find(patientId).getPublicId());
       } else {
          errorMessage.setVisible(true);
       }
