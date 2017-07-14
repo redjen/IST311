@@ -1,6 +1,7 @@
 package app;
 
 import hospital.Account;
+import hospital.PatientCollection;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,9 @@ import javafx.stage.Stage;
 /**
  * The ViewManager is a top-level controller/manager for the application's
  * views and stage.
+ * 
+ * @author maximdumont
+ * @author redjen
  */
 public class ViewManager {
 
@@ -19,6 +23,7 @@ public class ViewManager {
    private Stage stage;
    private int x, y;
    private static Account currentAccount = null;
+   private final PatientCollection patientCollection;
 
    private final static int DEFAULT_WIDTH = 640;
    private final static int DEFAULT_HEIGHT = 500;
@@ -36,6 +41,7 @@ public class ViewManager {
       this.instance = this;
       this.x = x;
       this.y = y;
+      patientCollection = new PatientCollection();
    }
 
    /**
@@ -67,6 +73,15 @@ public class ViewManager {
 
    public int getY() {
       return this.y;
+   }
+
+   /**
+    * Returns the collection/controller for the list of patients in the system
+    *
+    * @return the collection/controller
+    */
+   public PatientCollection getPatientCollection() {
+      return patientCollection;
    }
 
    /**

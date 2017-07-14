@@ -36,14 +36,14 @@
         <TextField fx:id="firstName" prefHeight="27.0" prefWidth="170.0" promptText="First Name" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
         <TextField fx:id="lastName" prefWidth="200.0" promptText="Last Name" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
         <CheckBox fx:id="sendUpdates" mnemonicParsing="false" selected="true" text="Send Updates" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-        <Button fx:id="addNewButton" mnemonicParsing="false" onAction="#onAddClicked" text="Add patient" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="TOP">
+        <Button fx:id="addNewButton" defaultButton="true" mnemonicParsing="false" onAction="#onAddClicked" text="Add patient" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="40.0" />
                </GridPane.margin>
             </Button>
             <Label text="First name" GridPane.rowIndex="4" />
             <Label text="Last name" GridPane.rowIndex="5" />
-            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#reset" text="Clear" GridPane.rowIndex="7" GridPane.valignment="TOP">
+            <Button fx:id="clearButton" cancelButton="true" mnemonicParsing="false" onAction="#reset" text="Clear" GridPane.rowIndex="7" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="40.0" />
                </GridPane.margin>
@@ -59,7 +59,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="patientIdLabel" text="patient ID" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="patientIdLabel" prefHeight="11.0" prefWidth="376.0" text="patient ID" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>

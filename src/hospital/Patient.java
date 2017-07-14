@@ -3,7 +3,7 @@ package hospital;
 import java.util.Date;
 
 /**
- *
+ * Patient represents a patient in the hospital
  * @author maximdumont
  */
 public class Patient {
