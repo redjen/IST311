@@ -11,9 +11,23 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * The ViewManager is a top-level controller/manager for the application's
- * views and stage.
- * 
+ * The ViewManager is a top-level controller/manager for the application.
+ *
+ * It provides the following functionality:
+ *
+ * 1. Acts as an intermediary between classes by providing methods to exchange
+ * information. See specific methods for more information.
+ *
+ * 2. Controls the size of the application window. The current height and width
+ * can be obtained from getX() and getY(). The dimensions can be changed through
+ * setDimensions().
+ *
+ * 3. Sets the current user (from LoginController) and shows the main inteface.
+ *
+ * 4. Logs out users by unsetting the current user and showing the login screen.
+ *
+ *
+ *
  * @author maximdumont
  * @author redjen
  */
