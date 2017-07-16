@@ -1,5 +1,6 @@
 package app;
 
+import hospital.PatientCollection;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -92,24 +93,30 @@ public class AdmittingViewController implements Initializable {
       errorMessage.setVisible(false);
       successMessage.setVisible(false);
       addAnotherButton.setVisible(false);
+      
+      // activate addNewButton on enter key
+      addAnotherButton.setDefaultButton(false);
+      addNewButton.setDefaultButton(true);
    }
 
    /**
     * Adds a new patient to the patient list.
     */
    private void addPatient() {
+      String patientId;
+      PatientCollection patientCollection = ViewManager.getManager().getPatientCollection();
       String firstNameText = firstName.getText();
       String lastNameText = lastName.getText();
+
+      // TODO create a new account if this is selected so patients can log in or design around the Patient class implementing Authenticatable
       boolean updatesSelected = sendUpdates.isSelected();
-      long patientID = 99999;
 
       if (!firstNameText.isEmpty() && !lastNameText.isEmpty()) {
-         // TODO call patient controller or model add
          errorMessage.setVisible(false);
 
-         System.out.println(String.format("[new patient] firstName: %s, lastName: %s, updates selected: %b, id: %d",
-                 firstNameText, lastNameText, updatesSelected, patientID));
-         updateViewPatientAdded(Long.toString(patientID));
+         patientId = patientCollection.add(firstNameText, lastNameText);
+
+         updateViewPatientAdded(patientCollection.find(patientId).getPublicId());
       } else {
          errorMessage.setVisible(true);
       }
@@ -117,7 +124,8 @@ public class AdmittingViewController implements Initializable {
 
    /**
     * Sets the form state after successfully adding a patient by hiding editing
-    * controls, showing the success message, and showing the "add another" button
+    * controls, showing the success message, and showing the "add another"
+    * button
     *
     * @param patientId new patient's ID
     */
@@ -132,6 +140,10 @@ public class AdmittingViewController implements Initializable {
       errorMessage.setVisible(false);
       successMessage.setVisible(true);
       addAnotherButton.setVisible(true);
+      
+      // activate addAnotherButton on enter key
+      addNewButton.setDefaultButton(false);
+      addAnotherButton.setDefaultButton(true);
    }
 
 }
