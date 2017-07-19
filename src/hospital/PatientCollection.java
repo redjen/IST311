@@ -56,8 +56,11 @@ public class PatientCollection {
     */
    public void remove(String patientId) {
       if (patients.containsKey(patientId)) {
+         Patient patient = patients.get(patientId);
          patients.remove(patientId);
+         patientList.remove(patient);
       }
+      // TODO archive patient
    }
 
    /**
@@ -74,7 +77,7 @@ public class PatientCollection {
    }
 
    /**
-    * Returns the obervable list for the patient
+    * Returns the observable list for the patient
     *
     * This method is intended for use with a table view
     *
