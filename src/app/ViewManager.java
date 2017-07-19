@@ -60,6 +60,7 @@ public class ViewManager {
       this.y = y;
       patientCollection = new PatientCollection();
       
+      // set up the patient change listener used to save patient data
       try {
          this.patientChangeObserver = new PatientChangeObserver();
          patientCollection.getPatientList().addListener(patientChangeObserver);
