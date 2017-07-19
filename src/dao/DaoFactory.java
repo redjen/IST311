@@ -104,7 +104,7 @@ public class DaoFactory {
             break;
          case FILE_DAO:
          default:
-            dao = new SerializedPatientDaoImpl();
+            dao = new FilePatientDaoImpl();
       }
 
       return dao;

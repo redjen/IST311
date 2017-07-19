@@ -1,7 +1,9 @@
 package app;
 
 import dao.DaoException;
+import dao.DaoFactory;
 import dao.PatientChangeObserver;
+import dao.PatientDao;
 import hospital.Account;
 import hospital.PatientCollection;
 import java.io.IOException;
@@ -59,10 +61,13 @@ public class ViewManager {
       this.x = x;
       this.y = y;
       patientCollection = new PatientCollection();
-      
-      // set up the patient change listener used to save patient data
+
+      // get all patients from repository then set up the patient change listener
       try {
          this.patientChangeObserver = new PatientChangeObserver();
+
+         PatientDao dao = DaoFactory.getPatientDao();
+         patientCollection.addAll(dao.getAllActivePatients());
          patientCollection.getPatientList().addListener(patientChangeObserver);
       } catch (DaoException ex) {
          Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);

@@ -3,6 +3,7 @@ package hospital;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -63,6 +64,7 @@ public class PatientCollection {
 
    public void add(Patient p) {
       patients.put(p.getPatientId(), p);
+      patientList.add(p);
    }
 
    /**
@@ -87,6 +89,17 @@ public class PatientCollection {
       System.out.printf("[Created patient] id: %s, firstName: %s, lastName: %s%n",
               patient.getPatientId(), patient.getFirstName(), patient.getLastName());
       return id;
+   }
+
+   /**
+    * Adds the patients
+    *
+    * @param newPatients the patients to add
+    */
+   public void addAll(List<Patient> newPatients) {
+      for (Patient newPatient : newPatients) {
+         add(newPatient);
+      }
    }
 
    /**
