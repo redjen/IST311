@@ -36,5 +36,7 @@ public interface PatientDao {
    public void archivePatient(Patient patient);
 
    public void savePatient(Patient patient);
+   
+   public void reset();
 
 }
