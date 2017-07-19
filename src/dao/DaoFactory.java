@@ -1,7 +1,5 @@
 package dao;
 
-import hospital.Patient;
-
 /**
  * Generates AccountDao and PatientDao instances
  *
