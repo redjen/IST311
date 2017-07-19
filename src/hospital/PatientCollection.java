@@ -100,7 +100,6 @@ public class PatientCollection {
          patients.remove(patientId);
          patientList.remove(patient);
       }
-      // TODO archive patient
    }
 
    /**
