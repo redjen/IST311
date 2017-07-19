@@ -42,10 +42,10 @@ public class FileAccountDaoImpl implements AccountDao {
    /**
     * Constructs a new Dao and loads the accounts
     *
-    * @throws dao.AccountDaoException if the account data file is missing,
+    * @throws dao.DaoException if the account data file is missing,
     * empty, or cannot be parsed
     */
-   public FileAccountDaoImpl() throws AccountDaoException {
+   public FileAccountDaoImpl() throws DaoException {
 
       this.accounts = new ArrayList<>();
       this.accountsByLoginName = new HashMap<>();
@@ -179,9 +179,9 @@ public class FileAccountDaoImpl implements AccountDao {
    /**
     * Loads the account repository from the data file
     *
-    * @throws AccountDaoException
+    * @throws DaoException
     */
-   private void loadRepository() throws AccountDaoException {
+   private void loadRepository() throws DaoException {
 
       File data = new File(ACCOUNT_DATA);
 
@@ -199,10 +199,10 @@ public class FileAccountDaoImpl implements AccountDao {
          }
 
       } catch (FileNotFoundException ex) {
-         throw new AccountDaoException(String.format("Employee data %s missing.",
+         throw new DaoException(String.format("Employee data %s missing.",
                  ACCOUNT_DATA));
       } catch (IOException ex) {
-         throw new AccountDaoException(String.format("Error reading account data %s.",
+         throw new DaoException(String.format("Error reading account data %s.",
                  ACCOUNT_DATA), ex);
       }
 

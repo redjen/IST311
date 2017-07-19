@@ -1,5 +1,7 @@
 package dao;
 
+import hospital.Patient;
+
 /**
  * Generates AccountDao and PatientDao instances
  *
@@ -15,7 +17,9 @@ package dao;
  * having to change multiple classes.
  *
  * @see AccountDao
- * @see AccountDaoException
+ * @see DaoException
+ *
+ * @author redjen
  *
  */
 public class DaoFactory {
@@ -42,9 +46,9 @@ public class DaoFactory {
     * Gets a new AccountDao of the default type
     *
     * @return new AccountDao
-    * @throws AccountDaoException
+    * @throws DaoException
     */
-   public static AccountDao getAccountDao() throws AccountDaoException {
+   public static AccountDao getAccountDao() throws DaoException {
       return getAccountDao(DEFAULT_DAO);
    }
 
@@ -56,9 +60,9 @@ public class DaoFactory {
     *
     * @param daoType the DaoType
     * @return new AccountDao
-    * @throws AccountDaoException
+    * @throws DaoException
     */
-   public static AccountDao getAccountDao(int daoType) throws AccountDaoException {
+   public static AccountDao getAccountDao(int daoType) throws DaoException {
       AccountDao dao = null;
 
       switch (daoType) {
@@ -68,6 +72,41 @@ public class DaoFactory {
          case FILE_DAO:
          default:
             dao = new FileAccountDaoImpl();
+      }
+
+      return dao;
+   }
+
+   /**
+    * Gets a new PatientDao of the default type
+    *
+    * @return the DAO
+    * @throws DaoException
+    */
+   public static PatientDao getPatientDao() throws DaoException {
+      return getPatientDao(DEFAULT_DAO);
+   }
+
+   /**
+    * Gets a new PatientDao of the specified type
+    *
+    * The available types are public static fields of this class: DATABASE_DAO
+    * and FILE_DAO
+    *
+    * @param daoType the DaoType
+    * @return new PatientDao
+    * @throws DaoException
+    */
+   public static PatientDao getPatientDao(int daoType) throws DaoException {
+      PatientDao dao = null;
+
+      switch (daoType) {
+         case DATABASE_DAO:
+            // no-op: this is for future use
+            break;
+         case FILE_DAO:
+         default:
+            dao = new FilePatientDaoImpl();
       }
 
       return dao;
