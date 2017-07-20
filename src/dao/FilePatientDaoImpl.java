@@ -16,8 +16,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The FilePatientDaoImpl class represents
+ * FilePatientDaoImpl is a simple implementation of PatientDao that reads and
+ * writes patient data stored in plain text files.
  *
+ * Patient data is stored in files named with the patient ID and formatted with
+ * one attribute per line:
+ *
+ * patient ID
+ * admission date (formatted as a string for use with Instance)
+ * first name
+ * last name
+ *
+ * Active patients are stored in the directory PATIENT_DATA_DIRECTORY. Archived
+ * patients are stored in the directory ARCHIVED_PATIENT_DATA_DIRECTORY, which
+ * is currently a subdirectory of PATIENT_DATA_DIRECTORY.
+ *
+ * This class mainly serves to support our second use case (showing patients and
+ * nurses their version of the patient list). We need to show patients data, but
+ * since they cannot create patients we will need to use saved data. This may
+ * not be the implementation that we choose to use for the actual persistence of
+ * data assignment, but that's OK since we already have the PatientDAO interface
+ * defined and can use this class as a reference for building the one we will
+ * actually use. Switching from this implementation to another requires only
+ * changing the default DAO in DaoFactory or calling DaoFactory's getPatientDao
+ * method with a parameter specifying the new PatientDao implementation.
+ * 
+ * Please refer to PatientDao for general information on implementations should
+ * work.
+ *
+ * @see PatientDao
+ * @see DaoFactory
+ * @see PatientChangeListener
+ * 
+ * @author redjen
  */
 public class FilePatientDaoImpl implements PatientDao {
 
