@@ -1,5 +1,9 @@
 package app;
 
+import dao.DaoException;
+import dao.DaoFactory;
+import dao.PatientChangeListener;
+import dao.PatientDao;
 import hospital.Account;
 import hospital.PatientCollection;
 import java.io.IOException;
@@ -26,6 +30,11 @@ import javafx.stage.Stage;
  *
  * 4. Logs out users by unsetting the current user and showing the login screen.
  *
+ * 5. Creates and provides a reference to the PatientCollection.
+ *
+ * 6. Instantiates the PatientChangeListener and adds it to the
+ * PatientCollection for persisting data.
+ *
  *
  *
  * @author maximdumont
@@ -38,6 +47,7 @@ public class ViewManager {
    private int x, y;
    private static Account currentAccount = null;
    private final PatientCollection patientCollection;
+   private PatientChangeListener patientChangeListener;
 
    private final static int DEFAULT_WIDTH = 640;
    private final static int DEFAULT_HEIGHT = 500;
@@ -56,6 +66,17 @@ public class ViewManager {
       this.x = x;
       this.y = y;
       patientCollection = new PatientCollection();
+
+      // get all patients from repository then set up the patient change listener
+      try {
+         this.patientChangeListener = new PatientChangeListener();
+
+         PatientDao dao = DaoFactory.getPatientDao();
+         patientCollection.addAll(dao.getAllActivePatients());
+         patientCollection.getPatientList().addListener(patientChangeListener);
+      } catch (DaoException ex) {
+         Logger.getLogger(ViewManager.class.getName()).log(Level.SEVERE, null, ex);
+      }
    }
 
    /**

@@ -1,8 +1,8 @@
 package app;
 
 import dao.AccountDao;
-import dao.AccountDaoException;
-import dao.AccountDaoFactory;
+import dao.DaoException;
+import dao.DaoFactory;
 import hospital.Account;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -123,7 +123,7 @@ public class LoginController implements Initializable {
     */
    private void loginUser() {
       try {
-         AccountDao loginDao = AccountDaoFactory.getDao();
+         AccountDao loginDao = DaoFactory.getAccountDao();
          Account account = loginDao.getAccountByLoginName(username.getText());
          boolean isLoggedIn = account != null && account.validatePassword(password.getText());
          if (isLoggedIn) {
@@ -133,7 +133,7 @@ public class LoginController implements Initializable {
          } else {
             errorLabel.setVisible(true);
          }
-      } catch (AccountDaoException ex) {
+      } catch (DaoException ex) {
          Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
       }
    }

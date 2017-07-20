@@ -24,8 +24,8 @@ public class FileAccountDaoTest {
   
 
    @Before
-   public void setUp() throws AccountDaoException {
-      dao = AccountDaoFactory.getDao();
+   public void setUp() throws DaoException {
+      dao = DaoFactory.getAccountDao();
    }
    
    @After
