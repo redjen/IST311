@@ -84,7 +84,7 @@ public class TabViewController implements Initializable {
       } else {
          // patient view
          // TODO add the complete set of tabs here once the patient-related views have been created
-         tabPane.getTabs().addAll(homeTab);
+         tabPane.getTabs().addAll(homeTab, patientListTab);
       }
    }
 
