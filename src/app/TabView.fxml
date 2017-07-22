@@ -12,9 +12,7 @@
         <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="homeTab" text="Home">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
+                    <fx:include source="HomeView.fxml" />
                 </Tab>
                 <Tab fx:id="patientListTab" text="Patient List">
                     <fx:include source="PatientListView.fxml" />

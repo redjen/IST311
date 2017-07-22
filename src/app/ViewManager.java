@@ -176,6 +176,7 @@ public class ViewManager {
       if (ViewManager.currentAccount != null) {
          System.out.printf("Logged out current account%n", currentAccount.getLoginName());
          ViewManager.currentAccount = null;
+         navigate("Login.fxml");
       }
    }
 
@@ -188,4 +189,9 @@ public class ViewManager {
    public boolean isEmployeeAccountLoggedIn() {
       return (ViewManager.currentAccount != null && ViewManager.currentAccount.isEmployee());
    }
+
+   public static Account getCurrentAccount() {
+      return currentAccount;
+   }
+   
 }
