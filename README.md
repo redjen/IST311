@@ -18,5 +18,6 @@ test3 / testpass3
 * enter a patient into the system
 * display patients in the patient list tab
 * show nurses full patient information, but restrict patients to seeing only ID and status (status not yet implemented)
+* early implementation of saving patient data (not final version, mostly for testing)
 
 
