@@ -14,9 +14,6 @@ import javafx.scene.control.TextField;
  */
 public class PatientStatusViewController implements Initializable {
 
-   // search field for searching patients
-   @FXML
-   private TextField searchField;
 
    // patient number text field
    @FXML
@@ -44,15 +41,6 @@ public class PatientStatusViewController implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle rb) {
       // TODO
-   }
-
-   /**
-    * Search for patient data when go button clicked
-    *
-    * @param event
-    */
-   public void OnGoClicked(ActionEvent event) {
-      String searchString = searchField.getText();
    }
 
    /**
