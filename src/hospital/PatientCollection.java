@@ -145,8 +145,8 @@ public class PatientCollection {
          public Observable[] call(Patient param) {
             return new Observable[]{
                param.getFirstNameProperty(),
-               param.getLastNameProperty()
-            // TODO add status attribute when implemented
+               param.getLastNameProperty(),
+               param.getStatusProperty()
             };
          }
       });
