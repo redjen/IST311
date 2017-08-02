@@ -184,7 +184,8 @@ public class FilePatientDaoImpl implements PatientDao {
          out.write(patient.getFirstName());
          out.newLine();
          out.write(patient.getLastName());
-         // TODO add status
+         out.newLine();
+         out.write(patient.getStatus().ordinal());
          System.out.printf("Saved patient %s%n", patient.getPatientId());
 
       } catch (IOException ex) {
@@ -208,7 +209,9 @@ public class FilePatientDaoImpl implements PatientDao {
             Date admissionDate = Date.from(Instant.parse(in.readLine()));
             String firstName = in.readLine();
             String lastName = in.readLine();
+            int status = Integer.parseInt(in.readLine());
             patient = new Patient(firstName, lastName, admissionDate, patientId);
+            
          }
       }
 
