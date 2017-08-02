@@ -50,10 +50,12 @@ public class PatientListViewController implements Initializable {
 
       // TODO add patient status once we've implemented it in the app
       tableColumnId.setCellValueFactory(cellData -> cellData.getValue().getPublicIdProperty());
+      tableColumnStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty().asString());
 
       if (manager.isEmployeeAccountLoggedIn()) {
          tableColumnFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
          tableColumnLastName.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
+         
       } else {
          patientListTableView.getColumns().remove(tableColumnFirstName);
          patientListTableView.getColumns().remove(tableColumnLastName);
