@@ -24,14 +24,18 @@ public class Patient implements Serializable {
    private final StringProperty patientPublicId;
    private ObjectProperty<PatientStatus> status;
 
-   public Patient(String firstName, String lastName, Date admittanceDate, String patientId) {
+   public Patient(String firstName, String lastName, Date admittanceDate, String patientId, PatientStatus patientStatus) {
 
       this.admissionDate = new SimpleObjectProperty<>(admittanceDate);
       this.firstName = new SimpleStringProperty(firstName);
       this.lastName = new SimpleStringProperty(lastName);
       this.patientId = new SimpleStringProperty(patientId);
       this.patientPublicId = new SimpleStringProperty(patientId.substring(patientId.length() - 4));
-      this.status = new SimpleObjectProperty<>(PatientStatus.WAITING);
+      this.status = new SimpleObjectProperty<>(patientStatus);
+   }
+   
+   public Patient(String firstName, String lastName, Date admittanceDate, String patientId) {
+      this(firstName, lastName, admittanceDate, patientId, PatientStatus.WAITING);
    }
 
    public ObjectProperty<PatientStatus> getStatusProperty() {
