@@ -1,6 +1,7 @@
 package dao;
 
 import hospital.Patient;
+import hospital.PatientStatus;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -184,7 +185,8 @@ public class FilePatientDaoImpl implements PatientDao {
          out.write(patient.getFirstName());
          out.newLine();
          out.write(patient.getLastName());
-         // TODO add status
+         out.newLine();
+         out.write(patient.getStatus().name());
          System.out.printf("Saved patient %s%n", patient.getPatientId());
 
       } catch (IOException ex) {
@@ -208,7 +210,9 @@ public class FilePatientDaoImpl implements PatientDao {
             Date admissionDate = Date.from(Instant.parse(in.readLine()));
             String firstName = in.readLine();
             String lastName = in.readLine();
-            patient = new Patient(firstName, lastName, admissionDate, patientId);
+            String status = in.readLine();
+            patient = new Patient(firstName, lastName, admissionDate, patientId, PatientStatus.valueOf(status));
+            
          }
       }
 
