@@ -36,6 +36,7 @@ public class PatientListViewController implements Initializable {
    @Override
    public void initialize(URL url, ResourceBundle rb) {
       manager = ViewManager.getManager();
+      addSelectionListener();
       populateView();
    }
 
@@ -55,12 +56,19 @@ public class PatientListViewController implements Initializable {
       if (manager.isEmployeeAccountLoggedIn()) {
          tableColumnFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
          tableColumnLastName.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
-         
+
       } else {
          patientListTableView.getColumns().remove(tableColumnFirstName);
          patientListTableView.getColumns().remove(tableColumnLastName);
       }
 
       patientListTableView.setItems(manager.getPatientCollection().getPatientList());
+   }
+
+   private void addSelectionListener() {
+      patientListTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+         Patient selectedPatient = newSelection;
+         ViewManager.getManager().setSelectedPatient(selectedPatient);
+      });
    }
 }
