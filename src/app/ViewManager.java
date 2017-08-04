@@ -5,10 +5,12 @@ import dao.DaoFactory;
 import dao.PatientChangeListener;
 import dao.PatientDao;
 import hospital.Account;
+import hospital.Patient;
 import hospital.PatientCollection;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,6 +50,8 @@ public class ViewManager {
    private static Account currentAccount = null;
    private final PatientCollection patientCollection;
    private PatientChangeListener patientChangeListener;
+   
+   private SimpleObjectProperty<Patient> selectedPatient;
 
    private final static int DEFAULT_WIDTH = 640;
    private final static int DEFAULT_HEIGHT = 500;
@@ -66,6 +70,7 @@ public class ViewManager {
       this.x = x;
       this.y = y;
       patientCollection = new PatientCollection();
+      selectedPatient = new SimpleObjectProperty<>();
 
       // get all patients from repository then set up the patient change listener
       try {
@@ -192,6 +197,14 @@ public class ViewManager {
 
    public static Account getCurrentAccount() {
       return currentAccount;
+   }
+
+   public SimpleObjectProperty<Patient> getSelectedPatientProperty() {
+      return selectedPatient;
+   }
+
+   public void setSelectedPatient(Patient newSelectedPatient) {
+      selectedPatient.set(newSelectedPatient);
    }
    
 }

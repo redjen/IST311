@@ -43,7 +43,7 @@ public class Patient implements Serializable {
    }
 
    public void setStatus(PatientStatus patientStatus) {
-      this.status = new SimpleObjectProperty<>(patientStatus);
+      status.set(patientStatus);
    }
 
    public PatientStatus getStatus() {
