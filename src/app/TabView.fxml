@@ -20,9 +20,6 @@
                 <Tab fx:id="admittingTab" text="Admitting">
                     <fx:include source="AdmittingView.fxml" />
                 </Tab>
-                <Tab fx:id="updateStatusTab" text="Update Status">
-                    <fx:include source="PatientStatusView.fxml" />
-                </Tab>
             </tabs>
         </TabPane>
         <Label fx:id="clockLabel" text="Label" StackPane.alignment="TOP_RIGHT">
