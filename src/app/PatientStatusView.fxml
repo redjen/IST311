@@ -11,7 +11,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.PatientStatusViewController">
   <children>
     <HBox id="HBox" alignment="CENTER" layoutX="300.0" layoutY="27.0" spacing="5.0" />
-    <AnchorPane id="AnchorPane" layoutX="129.0" layoutY="84.0" prefHeight="174.0">
+    <AnchorPane id="AnchorPane" layoutX="94.0" layoutY="27.0" prefHeight="174.0" prefWidth="412.0">
       <children>
         <HBox id="HBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" spacing="5.0">
           <children>
@@ -48,8 +48,13 @@
             </ComboBox>
           </children>
         </HBox>
-        <Button layoutX="0.0" layoutY="152.0" mnemonicParsing="false" onAction="#onUpdateClicked" prefWidth="308.0" text="Update Patient" />
       </children>
     </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="201.0" prefHeight="182.0" prefWidth="568.0">
+         <children>
+        <Button layoutX="392.0" layoutY="23.0" mnemonicParsing="false" onAction="#onUpdateClicked" prefHeight="27.0" prefWidth="162.0" text="Update Patient" />
+            <Button fx:id="cancelButton" layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#onCancelClicked" text="Cancel" />
+         </children>
+      </AnchorPane>
   </children>
 </AnchorPane>

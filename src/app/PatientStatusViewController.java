@@ -75,6 +75,10 @@ public class PatientStatusViewController implements Initializable {
       
    }
    
+   public void onCancelClicked(ActionEvent event) {
+      ViewManager.getManager().navigate(TAB_VIEW_NAME);
+   }
+   
    public void displayPatient(Patient patient) {
       
       if (patient != null) {

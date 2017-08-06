@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
  *
  */
 public class PatientListViewController implements Initializable {
-   
+
    private static final String UPDATE_STATUS_TAB_NAME = "PatientStatusView.fxml";
 
    // table view used to populate patient data
@@ -66,18 +66,20 @@ public class PatientListViewController implements Initializable {
          patientListTableView.getColumns().remove(tableColumnLastName);
       }
 
-      // create double-click handler
-      patientListTableView.setRowFactory(tv -> {
-         TableRow<Patient> row = new TableRow<>();
-         row.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && !row.isEmpty()) {
-               Patient patient = row.getItem();
-               ViewManager.getManager().setSelectedPatient(patient);
-               ViewManager.getManager().navigate(UPDATE_STATUS_TAB_NAME);
-            }
+      // create double-click handler to open update view if user is an employee
+      if (ViewManager.getManager().isEmployeeAccountLoggedIn()) {
+         patientListTableView.setRowFactory(tv -> {
+            TableRow<Patient> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+               if (event.getClickCount() == 2 && !row.isEmpty()) {
+                  Patient patient = row.getItem();
+                  ViewManager.getManager().setSelectedPatient(patient);
+                  ViewManager.getManager().navigate(UPDATE_STATUS_TAB_NAME);
+               }
+            });
+            return row;
          });
-         return row;
-      });
+      }
 
       patientListTableView.setItems(manager.getPatientCollection().getPatientList());
    }
