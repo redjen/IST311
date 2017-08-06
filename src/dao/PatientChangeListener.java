@@ -70,7 +70,6 @@ public class PatientChangeListener implements ListChangeListener<Patient> {
             for (int i = changes.getFrom(); i < changes.getTo(); i++) {
                dao.savePatient(changes.getList().get(i));
             }
-            System.out.println(changes.getFrom() + " to " + changes.getTo());
          }
 
          // patient deleted (to be archived)
