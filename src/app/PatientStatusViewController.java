@@ -3,7 +3,6 @@ package app;
 import hospital.Patient;
 import hospital.PatientStatus;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +20,8 @@ import javafx.scene.control.TextField;
  *
  */
 public class PatientStatusViewController implements Initializable {
+   
+   private static final String TAB_VIEW_NAME = "TabView.fxml";
 
    // patient number text field
    @FXML
@@ -51,6 +52,7 @@ public class PatientStatusViewController implements Initializable {
       for (PatientStatus ps : PatientStatus.values()) {
          statusOptionsLabel.getItems().add(ps.name());
       }
+      displayPatient(ViewManager.getManager().getSelectedPatientProperty().get());
    }
 
    /**
@@ -63,6 +65,7 @@ public class PatientStatusViewController implements Initializable {
       patient.setFirstName(firstNameTextField.getText());
       patient.setLastName(lastNameTextField.getText());
       patient.setStatus(PatientStatus.valueOf((String) statusOptionsLabel.getValue()));
+      ViewManager.getManager().navigate(TAB_VIEW_NAME);
       
    }
 

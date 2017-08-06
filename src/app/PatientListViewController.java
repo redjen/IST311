@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 /**
@@ -13,6 +14,8 @@ import javafx.scene.control.TableView;
  *
  */
 public class PatientListViewController implements Initializable {
+   
+   private static final String UPDATE_STATUS_TAB_NAME = "PatientStatusView.fxml";
 
    // table view used to populate patient data
    @FXML
@@ -49,10 +52,11 @@ public class PatientListViewController implements Initializable {
     */
    private void populateView() {
 
-      // TODO add patient status once we've implemented it in the app
+      // Bind cells
       tableColumnId.setCellValueFactory(cellData -> cellData.getValue().getPublicIdProperty());
       tableColumnStatus.setCellValueFactory(cellData -> cellData.getValue().getStatusProperty().asString());
 
+      //
       if (manager.isEmployeeAccountLoggedIn()) {
          tableColumnFirstName.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
          tableColumnLastName.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
@@ -61,6 +65,19 @@ public class PatientListViewController implements Initializable {
          patientListTableView.getColumns().remove(tableColumnFirstName);
          patientListTableView.getColumns().remove(tableColumnLastName);
       }
+
+      // create double-click handler
+      patientListTableView.setRowFactory(tv -> {
+         TableRow<Patient> row = new TableRow<>();
+         row.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !row.isEmpty()) {
+               Patient patient = row.getItem();
+               ViewManager.getManager().setSelectedPatient(patient);
+               ViewManager.getManager().navigate(UPDATE_STATUS_TAB_NAME);
+            }
+         });
+         return row;
+      });
 
       patientListTableView.setItems(manager.getPatientCollection().getPatientList());
    }
