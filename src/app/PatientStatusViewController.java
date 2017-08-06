@@ -61,20 +61,26 @@ public class PatientStatusViewController implements Initializable {
     * @param event
     */
    public void onUpdateClicked(ActionEvent event) {
+      
       Patient patient = ViewManager.getManager().getSelectedPatientProperty().get();
       patient.setFirstName(firstNameTextField.getText());
       patient.setLastName(lastNameTextField.getText());
       patient.setStatus(PatientStatus.valueOf((String) statusOptionsLabel.getValue()));
+      
+      if (PatientStatus.valueOf((String) statusOptionsLabel.getValue()).equals(PatientStatus.DISCHARGE)) {
+         ViewManager.getManager().getPatientCollection().remove(patient.getPatientId());
+      }
+      
       ViewManager.getManager().navigate(TAB_VIEW_NAME);
       
    }
-
+   
    public void displayPatient(Patient patient) {
-
+      
       if (patient != null) {
          DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy H:m");
          LocalDateTime admitDate = LocalDateTime.from(patient.getAdmissionDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-
+         
          patientNumberTextField.setText(patient.getPublicId());
          firstNameTextField.setText(patient.getFirstName());
          lastNameTextField.setText(patient.getLastName());
@@ -86,10 +92,9 @@ public class PatientStatusViewController implements Initializable {
          lastNameTextField.clear();
          admittedDateTextField.clear();
       }
-       
-
+      
    }
-
+   
    private void addSelectedPatientListener() {
       ViewManager.getManager().getSelectedPatientProperty().addListener(new ChangeListener<Patient>() {
          @Override
