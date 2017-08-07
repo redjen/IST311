@@ -127,7 +127,7 @@ public class FilePatientDaoImpl implements PatientDao {
    @Override
    public void archivePatient(Patient patient) {
       Path patientSavedDataFile = Paths.get(PATIENT_DATA_DIRECTORY, patient.getPatientId());
-      Path patientArchiveDataFile = Paths.get(ARCHIVED_PATIENT_DATA_DIRECTORY, patient.getPatientId());
+      Path patientArchiveDataFile = Paths.get(PATIENT_DATA_DIRECTORY, ARCHIVED_PATIENT_DATA_DIRECTORY, patient.getPatientId());
       try {
          Files.deleteIfExists(patientSavedDataFile);
          serializePatient(patient, patientArchiveDataFile);
@@ -159,7 +159,6 @@ public class FilePatientDaoImpl implements PatientDao {
       try {
          if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
             Files.createDirectories(path);
-            System.out.println("missing directory");
          }
       } catch (IOException iOException) {
          System.err.println(iOException.getMessage());
