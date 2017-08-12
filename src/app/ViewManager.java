@@ -206,5 +206,4 @@ public class ViewManager {
    public void setSelectedPatient(Patient newSelectedPatient) {
       selectedPatient.set(newSelectedPatient);
    }
-   
 }

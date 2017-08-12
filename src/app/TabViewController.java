@@ -35,7 +35,8 @@ public class TabViewController implements Initializable {
    @FXML
    private Tab admittingTab;
 
-
+   @FXML
+   private Tab mailboxTab;
    private Timer timer;
 
    public TabViewController() {
@@ -78,7 +79,7 @@ public class TabViewController implements Initializable {
       
       if (ViewManager.getManager().isEmployeeAccountLoggedIn()) {
          // nurse view
-         tabPane.getTabs().addAll(homeTab, patientListTab, admittingTab);
+         tabPane.getTabs().addAll(homeTab, patientListTab, admittingTab,mailboxTab);
       } else {
          // patient view
          // TODO add the complete set of tabs here once the patient-related views have been created
