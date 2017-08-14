@@ -1,10 +1,15 @@
 package app;
 
+import dao.DaoException;
+import dao.PatientChangeListener;
 import hospital.Patient;
 import hospital.PatientCollection;
+import hospital.PatientStatus;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +22,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
@@ -30,68 +36,43 @@ import notifcation.NotificationQueueingService;
 public class MailboxViewController implements Initializable {
 
     @FXML
-    private TextField mailboxDetailPaneTextField;
-
-    @FXML
     private ListView mailboxListView;
 
-    private static ObservableList listViewCollection = FXCollections.observableArrayList();
+    private static final ObservableList listViewCollection = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mailboxDetailPaneTextField.setText("No Record Selected. Please Selected A Record to view Details");
         mailboxListView.setItems(listViewCollection);
 
         mailboxListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> list) {
                 return new LabelCell();
-
             }
         }
         );
-        mailboxListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
-                if (newValue.contains("added") || newValue.contains("removed")) {
-                    mailboxDetailPaneTextField.setText("No Additional Data For Selection");
-                } else {
-                    PatientCollection patientCollection = ViewManager.getManager().getPatientCollection();
-                    ObservableList<Patient> patientList = patientCollection.getPatientList();
-                    for (Patient patient : patientList) {
-                        if (patient.getPublicId().equals(newValue)) {
-                            String childView = String.format("(%s, %s) is currently %s", patient.getLastName(), patient.getFirstName(), patient.getStatusDisplayText(), new Date().toString());
-                            mailboxDetailPaneTextField.setText(childView);
-                            return;
-                        }
-                    }
-                }
-            }
-
-        });
 
         ViewManager.getManager().getPatientCollection().getPatientList().addListener((ListChangeListener.Change<? extends Patient> changes) -> {
             while (changes.next()) {
                 if (changes.wasRemoved()) {
                     for (Patient patient : changes.getRemoved()) {
-                        listViewCollection.add(String.format("%s removed", patient.getPublicId()));
+                        listViewCollection.add(String.format("(%s, %s) is currently removed", patient.getLastName(), patient.getFirstName(), patient.getStatusDisplayText(), new Date().toString()));
+                        return;
                     }
-                }
-                else if (changes.wasAdded()) {
+                } else if (changes.wasAdded()) {
                     for (Patient patient : changes.getAddedSubList()) {
-                        listViewCollection.add(String.format("%s added", patient.getPublicId()));
+                        listViewCollection.add(String.format("(%s, %s) is currently added", patient.getLastName(), patient.getFirstName(), patient.getStatusDisplayText(), new Date().toString()));
+                        return;
                     }
-                }
-                else if (changes.wasUpdated()) {
+                } else if (changes.wasUpdated()) {
                     for (int i = changes.getFrom(); i < changes.getTo(); i++) {
-                        Patient collectionPatient = ViewManager.getManager().getPatientCollection().find(changes.getList().get(i).getPatientId());
-                        listViewCollection.add(collectionPatient.getPublicId());
+                        Patient patient = ViewManager.getManager().getPatientCollection().find(changes.getList().get(i).getPatientId());
+                        listViewCollection.add(String.format("(%s, %s) is currently %s", patient.getLastName(), patient.getFirstName(), patient.getStatusDisplayText(), new Date().toString()));
+                        return;
                     }
                 }
             }
         });
-
     }
 
     static class LabelCell extends ListCell<String> {
@@ -102,6 +83,15 @@ public class MailboxViewController implements Initializable {
             Label label = new Label();
 
             if (item != null) {
+                if (item.contains("waiting")) {
+                    label.setStyle("-fx-background-color:green");
+                } else if (item.contains("in treatment")) {
+                    label.setStyle("-fx-background-color:Yellow");
+                } else if (item.contains("in recovery")) {
+                    label.setStyle("-fx-background-color:Red");
+                } else {
+                    label.setStyle("-fx-background-color:rgb(51, 102, 153)");
+                }
                 label.setText(item);
                 setGraphic(label);
             }
