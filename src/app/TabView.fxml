@@ -20,6 +20,9 @@
                 <Tab fx:id="admittingTab" text="Admitting">
                     <fx:include source="AdmittingView.fxml" />
                 </Tab>
+                <Tab fx:id="mailboxTab" text="Mailbox">
+                    <fx:include source="MailboxView.fxml" />
+                </Tab>
             </tabs>
         </TabPane>
         <Label fx:id="clockLabel" text="Label" StackPane.alignment="TOP_RIGHT">
